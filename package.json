@@ -24,7 +24,8 @@
     "build": "tsc",
     "prepare": "tsc",
     "watch": "yarn run build --watch",
-    "lint": "eslint ."
+	"lint": "eslint .",
+	"test": "yarn jest src/**/*.test.ts"
   },
   "devDependencies": {
     "@getflywheel/eslint-config-local": "^1.0.4",
