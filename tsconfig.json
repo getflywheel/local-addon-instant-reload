@@ -13,12 +13,15 @@
 		"outDir": "./lib",
 		"resolveJsonModule": true,
 		"rootDir": "./src",
+		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": false,
 		"target": "es2015"
 	},
 	"exclude": [
-		"node_modules"
+		"src/**/*.test.ts",
+		"src/renderer/**/*",
+		"src/renderer.tsx"
 	],
 	"include": [
 		"src"

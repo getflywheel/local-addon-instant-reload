@@ -1,4 +1,4 @@
-import Boilerplate from './Boilerplate';
+import Boilerplate from './renderer/Boilerplate';
 import fs from 'fs-extra';
 import path from 'path';
 
