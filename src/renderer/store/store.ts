@@ -1,7 +1,10 @@
 import { useSelector, TypedUseSelectorHook, PayloadAction } from 'react-redux';
 import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { FileChangeEntry } from '../../types';
 
 export { selectors } from './selectors';
+
+type LogSlice = { [siteID: string]: FileChangeEntry[] }
 
 const activeSiteIDSlice = createSlice({
 	name: 'activeSiteID',
@@ -20,8 +23,15 @@ const activeSiteIDSlice = createSlice({
  */
 const logSlice = createSlice({
 	name: 'log',
-	initialState: {},
-	reducers: {},
+	initialState: {} as LogSlice,
+	reducers: {
+		fileChange: (state, action: PayloadAction<{ siteID: string, fileChangeEntry: FileChangeEntry }>) => {
+			const { siteID, fileChangeEntry } = action.payload;
+			state[siteID].push(fileChangeEntry);
+
+			return state;
+		},
+	},
 });
 
 export const store = configureStore({
