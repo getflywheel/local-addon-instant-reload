@@ -21,13 +21,11 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "yarn build-main && yarn build-renderer",
-    "build-main": "tsc",
-    "watch-main": "yarn build-main --watch",
-    "build-renderer": "yarn webpack --config webpack.config.js",
+    "build": "yarn webpack --config webpack.config.js",
+	"clean": "rm -rf ./lib",
+    "watch": "yarn build --watch",
     "watch-renderer": "yarn build-renderer --watch",
     "prepare": "yarn run build",
-    "watch": "yarn run build --watch",
     "lint": "eslint .",
     "test": "yarn jest src/**/*.test.ts"
   },
