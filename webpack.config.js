@@ -1,11 +1,15 @@
+/* eslint-disable-next-line @typescript-eslint/no-var-requires */
 const path = require('path');
 
 module.exports = {
-	entry: [
-		path.join(__dirname, 'src', 'renderer.tsx'),
-	],
+	context: path.resolve(__dirname, 'src'),
+	entry: {
+		renderer: './renderer.tsx',
+		main: './main.ts',
+	},
 	externals: [
 		'@getflywheel/local/renderer',
+		'@getflywheel/local/main',
 		'react',
 		'@getflywheel/local-components',
 		'react-dom',
@@ -53,6 +57,7 @@ module.exports = {
 	},
 	node: {
 		fs: 'empty',
+		/* eslint-disable-next-line camelcase */
 		child_process: 'empty',
 		__dirname: false,
 	},
@@ -60,7 +65,7 @@ module.exports = {
 		extensions: ['.tsx', '.ts', '.jsx', '.js'],
 	},
 	output: {
-		filename: 'renderer.js',
+		filename: '[name].js',
 		path: path.join(__dirname, 'lib'),
 		libraryTarget: 'commonjs2',
 	},
