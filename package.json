@@ -22,7 +22,7 @@
   "license": "MIT",
   "scripts": {
     "build": "yarn webpack --config webpack.config.js",
-	"clean": "rm -rf ./lib",
+    "clean": "rm -rf ./lib",
     "watch": "yarn build --watch",
     "watch-renderer": "yarn build-renderer --watch",
     "prepare": "yarn run build",
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@getflywheel/eslint-config-local": "^1.0.4",
-    "@getflywheel/local": "^5.0.0",
+    "@getflywheel/local": "^5.9.7",
     "@types/classnames": "^2.2.9",
     "@types/dateformat": "^3.0.1",
     "@types/jest": "^26.0.19",
