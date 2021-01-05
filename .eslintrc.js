@@ -26,6 +26,7 @@ module.exports = {
 				],
 			},
 		],
+		'valid-jsdoc': 'off',
 		/**
 		 * The stock no-use-before-define rule is incompatible with TS. The solution is to disable it and then
 		 * enable a similar rule designed for TS
