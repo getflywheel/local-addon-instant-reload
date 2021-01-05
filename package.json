@@ -58,6 +58,7 @@
     "react-router-dom": "^4.3.1"
   },
   "dependencies": {
+    "@getflywheel/local-browsersync": "^2.26.9",
     "@getflywheel/local-components": "^14.0.0",
     "@reduxjs/toolkit": "^1.5.0",
     "classnames": "^2.2.6",
