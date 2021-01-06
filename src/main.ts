@@ -10,6 +10,7 @@ export default function (context: typeof serviceContainer.addonLoader.addonConte
 	const { ipcMain } = electron;
 	const instantReload = new InstantReload();
 
+
 	/**
 	 * start site
 	 * if IR not enabled
@@ -45,6 +46,9 @@ export default function (context: typeof serviceContainer.addonLoader.addonConte
 		});
 	};
 
+	/**
+	 * These IPC listeners are currently stubbed out waiting for the UI code port
+	 */
 	ipcMain.on(IPC_EVENTS.ENABLE_INSTANT_RELOAD, toggleInstantReloadFactory(true));
 
 	ipcMain.on(IPC_EVENTS.DISABLE_INSTANT_RELOAD, toggleInstantReloadFactory(false));
