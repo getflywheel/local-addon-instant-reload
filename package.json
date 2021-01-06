@@ -22,7 +22,7 @@
   "license": "MIT",
   "scripts": {
     "build": "yarn webpack --config webpack.config.js",
-    "clean": "rm -rf ./lib",
+    "clean": "rm -rf lib node_modules",
     "watch": "yarn build --watch",
     "watch-renderer": "yarn build-renderer --watch",
     "prepare": "yarn run build",
@@ -32,8 +32,6 @@
   "devDependencies": {
     "@getflywheel/eslint-config-local": "^1.0.4",
     "@getflywheel/local": "^5.9.7",
-    "@types/classnames": "^2.2.9",
-    "@types/dateformat": "^3.0.1",
     "@types/jest": "^26.0.19",
     "@types/jest-diff": "^24.3.0",
     "@types/node": "^12.7.12",
@@ -50,7 +48,9 @@
     "ts-loader": "^8.0.12",
     "typescript": "4.0.5",
     "webpack": "4.44.2",
-    "webpack-cli": "^4.2.0"
+    "webpack-cli": "^4.2.0",
+    "webpack-merge": "^5.7.3",
+    "webpack-node-externals": "^2.5.2"
   },
   "peerDependencies": {
     "react": ">= 16.4.0",
@@ -61,20 +61,19 @@
     "@getflywheel/local-browsersync": "^2.26.9",
     "@getflywheel/local-components": "^14.0.0",
     "@reduxjs/toolkit": "^1.5.0",
-    "classnames": "^2.2.6",
-    "dateformat": "^3.0.3",
     "fs-extra": "^9.0.1",
-    "prop-types": "^15.6.2",
+    "get-port": "^5.1.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-redux": "^7.2.2",
     "react-router-dom": "^5.1.2"
   },
   "bundledDependencies": [
-    "classnames",
-    "dateformat",
-    "@getflywheel/local-components",
-    "prop-types"
+	"@getflywheel/local-components",
+	"@getflywheel/local",
+    "@getflywheel/local-browsersync",
+    "fs-extra",
+    "get-port"
   ],
   "engines": {
     "local-by-flywheel": "^5.0.0"

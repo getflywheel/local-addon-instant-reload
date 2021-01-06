@@ -22,6 +22,7 @@ export default function (context: typeof serviceContainer.addonLoader.addonConte
 	 */
 
 	HooksMain.addAction('siteStarted', (site: Local.Site) => {
+		console.log('starting it up...............')
 		/**
 		 * Here we need to fire up browser sync, rewrite the local router proxy_pass and
 		 * live links start port
@@ -37,6 +38,7 @@ export default function (context: typeof serviceContainer.addonLoader.addonConte
 	});
 
 	HooksMain.addAction('siteStopped', (site: Local.Site) => {
+		console.log('shutting it down........')
 		instantReload.stopConnection(site);
 	});
 
