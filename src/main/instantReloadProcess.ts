@@ -3,9 +3,9 @@ import fs from 'fs';
 import getPort from 'get-port';
 /* @ts-ignore */
 import { addProtocol } from '@getflywheel/local';
-import browserSync, {
-	BrowserSyncInstance,
-} from '@getflywheel/local-browsersync';
+// import browserSync from '@getflywheel/local-browsersync';
+const browserSync = require('@getflywheel/local-browsersync');
+import type BrowserSyncInstance from '@getflywheel/local-browsersync';
 import { INSTANT_RELOAD_EVENTS } from '../constants';
 
 interface FileChangeResponse {

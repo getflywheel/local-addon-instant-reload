@@ -2,7 +2,13 @@ import path from 'path';
 import { ChildProcess } from 'child_process';
 import fs from 'fs-extra';
 import * as Local from '@getflywheel/local';
-import LocalMain from '@getflywheel/local/main';
+import {
+	getServiceContainer,
+	/* @ts-ignore */
+	ChildProcessMessagePromiseHelper,
+	childProcessMessagePromiseFactory,
+	workerFork,
+} from '@getflywheel/local/main';
 import {
 	INSTANT_RELOAD,
 	INSTANCE_START,
@@ -13,12 +19,12 @@ import {
 	INSTANT_RELOAD_EVENTS,
 } from '../constants';
 
-const serviceContainer = LocalMain.getServiceContainer().cradle;
+const serviceContainer = getServiceContainer().cradle;
 
 interface InstanceData {
 	childProcess: ChildProcess;
 	/* @ts-ignore */
-	processMessageHelper: LocalMain.ChildProcessMessagePromiseHelper;
+	processMessageHelper: ChildProcessMessagePromiseHelper;
 	hostname: string;
 	port: string;
 	proxyUrl: string;
@@ -130,15 +136,14 @@ export default class InstantReloadService {
 	public async createNewConnection (site: Local.Site): Promise<{ hostname: string, port: string }> {
 		this._updateStatus(site.id, STATUSES.STARTING);
 
-		const childProcess = LocalMain.workerFork(
+		const childProcess = workerFork(
 			path.join(__dirname, 'instantReloadProcess'),
 			{
 				JEST_WORKER_ID: process.env.JEST_WORKER_ID,
 			},
 		);
 
-		const processMessageHelper = LocalMain.childProcessMessagePromiseFactory(childProcess);
-
+		const processMessageHelper = childProcessMessagePromiseFactory(childProcess);
 
 		const instantReloadUrl = await processMessageHelper<string>(
 			INSTANT_RELOAD_EVENTS.CREATE,
