@@ -10,36 +10,23 @@ export default function (context: typeof serviceContainer.addonLoader.addonConte
 	const { ipcMain } = electron;
 	const instantReload = new InstantReload();
 
+	HooksMain.addAction('siteStarted', async (site: Local.Site) => {
+		try {
 
-	/**
-	 * start site
-	 * if IR not enabled
-	 * 		break
-	 * else
-	 * 		start browsersync
-	 * 		restart the local router (this will be handled by the start method of Local)
-	 * 		start up the file watchers
-	 */
-
-	HooksMain.addAction('siteStarted', (site: Local.Site) => {
-		console.log('starting it up...............')
-		/**
-		 * Here we need to fire up browser sync, rewrite the local router proxy_pass and
-		 * live links start port
-		 */
-
-		if (site.autoEnableInstantReload) {
-			instantReload.createNewConnection(site);
-			/**
-			 * @todo investigate adding file watchers after the Local router restarts
-			 */
-			instantReload.addFileWatchers(site);
+			if (site.autoEnableInstantReload) {
+				await instantReload.createNewConnection(site);
+				/**
+				 * @todo investigate adding file watchers after the Local router restarts
+				 */
+				instantReload.addFileWatchers(site);
+			}
+		} catch (err) {
+			throw new Error(err);
 		}
 	});
 
-	HooksMain.addAction('siteStopped', (site: Local.Site) => {
-		console.log('shutting it down........')
-		instantReload.stopConnection(site);
+	HooksMain.addAction('siteStopped', async (site: Local.Site) => {
+		await instantReload.stopConnection(site);
 	});
 
 	const toggleInstantReloadFactory = (autoEnableInstantReload: boolean) => (_, siteID: string) => {
@@ -47,6 +34,45 @@ export default function (context: typeof serviceContainer.addonLoader.addonConte
 			autoEnableInstantReload,
 		});
 	};
+
+	HooksMain.addFilter(
+		'routerServiceProxyPass',
+		(proxyPassValue: string, site: Local.Site) => {
+			const instance = instantReload.getInstanceData(site.id);
+
+			if (instance?.hostname && instance?.port) {
+				return `proxy_pass http://${instance.hostname}:${instance.port};`;
+			}
+
+			return proxyPassValue;
+		},
+	);
+
+	HooksMain.addFilter(
+		'liveLinksProServiceStartPort',
+		(port: number, site: Local.Site) => {
+			const instance = instantReload.getInstanceData(site.id);
+
+			if (instance?.port) {
+				return instance.port;
+			}
+
+			return port;
+		},
+	);
+
+	HooksMain.addFilter(
+		'liveLinksProServiceStartHostname',
+		(hostname: number, site: Local.Site) => {
+			const instance = instantReload.getInstanceData(site.id);
+
+			if (instance?.hostname) {
+				return instance.hostname;
+			}
+
+			return hostname;
+		},
+	);
 
 	/**
 	 * These IPC listeners are currently stubbed out waiting for the UI code port
