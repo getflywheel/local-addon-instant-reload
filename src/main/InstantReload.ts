@@ -4,6 +4,9 @@ import fs from 'fs-extra';
 import * as Local from '@getflywheel/local';
 import {
 	getServiceContainer,
+	/**
+	 * @todo remove ts-ignore once the new local api with this change is published
+	 */
 	/* @ts-ignore */
 	ChildProcessMessagePromiseHelper,
 	childProcessMessagePromiseFactory,
@@ -23,6 +26,9 @@ const serviceContainer = getServiceContainer().cradle;
 
 interface InstanceData {
 	childProcess: ChildProcess;
+	/**
+	 * @todo remove ts-ignore once the new local api with this change is published
+	 */
 	/* @ts-ignore */
 	processMessageHelper: ChildProcessMessagePromiseHelper;
 	hostname: string;
@@ -110,7 +116,7 @@ export default class InstantReloadService {
 	 * @param siteId string
 	 * @return {string}
 	 */
-	public getProxyUrl(siteId: string): string {
+	public getProxyUrl (siteId: string): string {
 		const instanceData = this.getInstanceData(siteId);
 
 		if (!instanceData) {

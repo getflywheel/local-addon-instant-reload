@@ -2,7 +2,6 @@ import path from 'path';
 import fs from 'fs';
 import getPort from 'get-port';
 /* @ts-ignore */
-import { addProtocol } from '@getflywheel/local';
 import browserSync from '@getflywheel/local-browsersync';
 import type BrowserSyncInstance from '@getflywheel/local-browsersync';
 import { INSTANT_RELOAD_EVENTS } from '../constants';
@@ -24,6 +23,24 @@ const watchFileExtensions = [
 	'gif',
 	'png',
 ];
+
+
+/**
+ * Appends http or http to the beginning of a url if a protocol does not already exist on the url
+ *
+ * @param url string
+ * @param protocol string
+ */
+export function addProtocol(url: string, https: boolean): string {
+	const protocolMatcher = /https?:\/\//g;
+	if (url.match(protocolMatcher)) {
+		return url;
+	}
+
+	const protocol = https ? 'https' : 'http';
+
+	return `${protocol}://${url}`;
+}
 
 function processSafeSend (name) {
 	return (payload?) => {
