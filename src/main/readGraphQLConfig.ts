@@ -16,7 +16,7 @@ export default function readGraphQLConfig (): GraphQLConfig {
 		);
 
 		config = JSON.parse(configString);
-	} catch(err) {
+	} catch (err) {
 		// probably no file found, so blow on by for now
 	}
 

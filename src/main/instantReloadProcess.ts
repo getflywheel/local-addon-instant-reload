@@ -31,7 +31,7 @@ const watchFileExtensions = [
  * @param url string
  * @param protocol string
  */
-export function addProtocol(url: string, https: boolean): string {
+export function addProtocol (url: string, https?: boolean): string {
 	const protocolMatcher = /https?:\/\//g;
 	if (url.match(protocolMatcher)) {
 		return url;
@@ -98,8 +98,8 @@ const handleCreate = async (payload) => {
 						// sets response header 'transfer-encoding' to undefined when running integration tests
 						// this header was causing parse errors when the proxy URL was called by fetch()
 						if (typeof process.env.JEST_WORKER_ID !== 'undefined') {
-							// eslint-disable-next-line no-param-reassign
-							proxyRes.headers['transfer-encoding'] = undefined;
+							/* eslint-disable-next-line no-param-reassign */
+							proxyRes.headers['transfer-encoding'] = null;
 						}
 					},
 				],
@@ -109,6 +109,7 @@ const handleCreate = async (payload) => {
 				// routing mode, so we must do so manually
 				{
 					match: new RegExp(`localhost:${payload.httpPort}`, 'g'),
+					/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 					fn: (req, res, match) => {
 						const localUrl = instantReloadInstance.getOption('urls').get('local');
 						const { hostname, port } = new URL(localUrl);
@@ -128,7 +129,7 @@ const handleCreate = async (payload) => {
 			 * Inspiration: https://github.com/BrowserSync/browser-sync/issues/788#issuecomment-298880372
 			 */
 			socket: {
-				domain(options) {
+				domain (options) {
 					return [
 						"'",
 						'location.protocol',
