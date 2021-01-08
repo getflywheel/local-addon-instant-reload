@@ -3,6 +3,13 @@
 version: 2.1
 
 anchors:
+  set_npm_token: &set_npm_token
+    run:
+      name: Set NPM Token
+      command: |
+        echo "registry=https://registry.npmjs.org/" > ~/.npmrc
+        echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
+
   install_yarn_deps: &install_yarn_deps
     run:
       name: Install Dependencies
@@ -43,6 +50,7 @@ jobs:
       - image: circleci/node:12.14-browsers
     steps:
       - checkout
+      - *set_npm_token
       - *restore_yarn_cache
       - *install_yarn_deps
       - *save_yarn_cache
