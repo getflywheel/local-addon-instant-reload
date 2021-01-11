@@ -1,9 +1,9 @@
-export const INSTANT_RELOAD = {
-	START: 'startInstantReload',
-	STOP: 'stopInstantReload',
-	FILE_ADDED: 'instantReload:fileAdded',
-	UPDATE_STATUS: 'instantReload:updateStatus',
-};
+// export const INSTANT_RELOAD = {
+	// START: 'startInstantReload',
+	// STOP: 'stopInstantReload',
+	// FILE_CHANGED: 'instantReload:fileChanged',
+	// UPDATE_STATUS: 'instantReload:updateStatus',
+// };
 
 export const STATUSES = {
 	STOPPED: 'instantReload:stopped',
@@ -41,4 +41,6 @@ export const IPC_EVENTS = {
 	DISABLE_INSTANT_RELOAD: 'instant-reload:disable-instant-reload',
 	GET_INITIAL_STATE: 'instant-reload:get-initial-state',
 	SET_AUTO_ENABLE_INSTANT_RELOAD: 'instant-reload:set-auto-enable-instant-reload',
+	UPDATE_STATUS: 'instant-reload:update-status',
+	FILE_CHANGED: 'instant-reload:file-changed',
 };

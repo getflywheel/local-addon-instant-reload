@@ -13,7 +13,7 @@ import {
 	workerFork,
 } from '@getflywheel/local/main';
 import {
-	INSTANT_RELOAD,
+	IPC_EVENTS,
 	INSTANCE_START,
 	INSTANCE_STOP,
 	InstantReloadStateParams,
@@ -74,7 +74,7 @@ export default class InstantReloadService {
 	 * @param status InstantReloadStatus
 	 */
 	private _updateStatus (siteId: Local.Site['id'], status: InstantReloadStatus) {
-		this._sendIPCEvent(INSTANT_RELOAD.UPDATE_STATUS, siteId, status);
+		this._sendIPCEvent(IPC_EVENTS.UPDATE_STATUS, siteId, status);
 	}
 
 	/**
@@ -179,9 +179,9 @@ export default class InstantReloadService {
 
 			if (name === INSTANT_RELOAD_EVENTS.FILE_CHANGED) {
 				this._sendIPCEvent(
-					INSTANT_RELOAD.FILE_ADDED,
+					IPC_EVENTS.FILE_CHANGED,
+					site.id,
 					{
-						siteId: site.id,
 						fileName: payload.file,
 						eventType: payload.event,
 						timeChanged: payload.timeChanged,

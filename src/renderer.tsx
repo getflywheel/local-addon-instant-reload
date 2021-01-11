@@ -8,14 +8,16 @@ import { store, actions } from './renderer/store/store';
 import InstantReload from './renderer/InstantReloadContent';
 import { IPC_EVENTS } from './constants';
 import { client } from './renderer/localClient/localGraphQLClient';
+import type { FileChangeEntry } from './types';
 
 const packageJSON = fs.readJsonSync(path.join(__dirname, '../package.json'));
 const addonName = packageJSON['productName'];
 const addonID = packageJSON['slug'];
 
 export default async function (context): Promise<void> {
-	const { React, hooks } = context;
+	const { React, hooks, electron } = context;
 	const { Route } = context.ReactRouter;
+	const { ipcRenderer } = electron;
 
 	const withProviders = (Component) => (props) => (
 		<ApolloProvider client={client}>
@@ -54,5 +56,10 @@ export default async function (context): Promise<void> {
 		});
 
 		return menu;
+	});
+
+	ipcRenderer.on(IPC_EVENTS.FILE_CHANGED, (_, siteID: string, fileChangeEntry: FileChangeEntry) => {
+		console.log('ipc listener.....', siteID, fileChangeEntry)
+		store.dispatch(actions.fileChange({ siteID, fileChangeEntry }));
 	});
 }
