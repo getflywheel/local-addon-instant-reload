@@ -1,0 +1,105 @@
+@import '../../../../node_modules/@getflywheel/local-components/src/styles/_partials/index.scss';
+
+.instantReloadTableList {
+	overflow: visible !important;
+}
+
+.instantReloadToggleHeader {
+	strong {
+		font-size: 18px;
+		padding-right: 15px !important;
+	}
+
+}
+
+.instantReloadText {
+	display: flex;
+	justify-content: space-between;
+	padding-left: 28.5px;
+	padding-bottom: 15px;
+	margin-right: 30px;
+}
+
+.instantReloadTextContent {
+	padding-top: 5px;
+}
+
+.instantReloadTooltip {
+	position: absolute;
+	padding: 0;
+	margin-top: 4px;
+}
+
+.tooltipContent {
+	padding: 20px;
+}
+
+.addPaddingTop {
+	padding-top: 10px;
+}
+
+.lastDetectedChange {
+	@include if-theme-light() {
+		background-color: #fff !important;
+	}
+	@include if-theme-dark() {
+		background-color: $gray-dark !important;
+	}
+
+	strong {
+		font-weight: 300 !important;
+	}
+
+	div {
+		text-align: right;
+		font-size: 12px !important;
+		color: #5d5e5e;
+		@include if-theme-dark() {
+			color: $white !important;
+		}
+	}
+}
+
+.InstantReload_InfoIcon {
+	width: 14px;
+	height: auto;
+	margin-top: 11px;
+	svg {
+		margin: 2px 0 0 0;
+
+		path {
+			@include if-theme-light() {
+				fill: $gray25;
+			}
+			@include if-theme-dark() {
+				fill: $gray;
+			}
+		}
+	}
+}
+
+.sessionLogContainer {
+	padding-left: 28.5px;
+	margin-right: 30px;
+
+	span {
+	font-size: 12px !important;
+	}
+}
+
+.logSessionActive {
+	@include theme-color-graydark-else-white;
+}
+
+.logSessionInactive {
+	color: $gray75;
+}
+
+.wpCacheAlert {
+	padding-left: 28.5px;
+	padding-bottom: 25px;
+	margin-right: 30px;
+	& span {
+		font-size: 12px;
+	}
+}

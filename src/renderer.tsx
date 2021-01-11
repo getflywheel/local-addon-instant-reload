@@ -2,24 +2,36 @@
 import fs from 'fs-extra';
 import path from 'path';
 import { Provider } from 'react-redux';
-import { store } from './renderer/store/store';
-import InstantReload from './renderer/index';
+import { ApolloProvider } from '@apollo/client';
+import { ipcAsync } from '@getflywheel/local/renderer';
+import { store, actions } from './renderer/store/store';
+import InstantReload from './renderer/InstantReloadContent';
+import { IPC_EVENTS } from './constants';
+import { client } from './renderer/localClient/localGraphQLClient';
 
 const packageJSON = fs.readJsonSync(path.join(__dirname, '../package.json'));
 const addonName = packageJSON['productName'];
 const addonID = packageJSON['slug'];
 
-export default function (context) {
+export default async function (context): Promise<void> {
 	const { React, hooks } = context;
 	const { Route } = context.ReactRouter;
 
-	const withStoreProvider = (Component) => (props) => (
-		<Provider store={store}>
-			<Component {...props} />
-		</Provider>
+	const withProviders = (Component) => (props) => (
+		<ApolloProvider client={client}>
+			<Provider store={store}>
+				<Component {...props} />
+			</Provider>
+		</ApolloProvider>
 	);
 
-	const InstantReloadHOC = withStoreProvider(InstantReload);
+	/**
+	 * Read sites.json and set an initial state
+	 */
+	const initialState = await ipcAsync(IPC_EVENTS.GET_INITIAL_STATE);
+	store.dispatch(actions.setInitialState(initialState));
+
+	const InstantReloadHOC = withProviders(InstantReload);
 
 	// Create the route/page of content that will be displayed when the menu option is clicked
 	hooks.addContent('routesSiteInfo', () => (

@@ -4,7 +4,9 @@ import { FileChangeEntry } from '../../types';
 
 export { selectors } from './selectors';
 
-type LogSlice = { [siteID: string]: FileChangeEntry[] }
+type LogSlice = { [siteID: string]: FileChangeEntry[] };
+
+type InstantReloadEnabledSlice = { [siteID: string]: boolean };
 
 const activeSiteIDSlice = createSlice({
 	name: 'activeSiteID',
@@ -12,6 +14,29 @@ const activeSiteIDSlice = createSlice({
 	reducers: {
 		setActiveSiteID: (state, action: PayloadAction<string>) => {
 			state = action.payload;
+			return state;
+		},
+	},
+});
+
+const instantReloadEnabledSlice = createSlice({
+	name: 'instantReloadEnabled',
+	initialState: {} as InstantReloadEnabledSlice,
+	reducers: {
+		setInitialState: (state, action: PayloadAction<InstantReloadEnabledSlice>) => {
+			state = action.payload;
+			return state;
+		},
+		setInstantReloadEnabledBySiteID: (state, action: PayloadAction<{ siteID: string, enabled: boolean }>) => {
+			const { siteID, enabled } = action.payload;
+			state[siteID] = enabled;
+			return state;
+		},
+		toggleInstantReloadBySiteID: (state, action: PayloadAction<string>) => {
+			const siteID = action.payload;
+			const enabled = !state[siteID];
+			state[siteID] = enabled;
+
 			return state;
 		},
 	},
@@ -37,12 +62,14 @@ const logSlice = createSlice({
 export const store = configureStore({
 	reducer: {
 		activeSiteID: activeSiteIDSlice.reducer,
+		instantReloadEnabled: instantReloadEnabledSlice.reducer,
 		log: logSlice.reducer,
 	},
 });
 
 export const actions = {
 	...activeSiteIDSlice.actions,
+	...instantReloadEnabledSlice.actions,
 	...logSlice.actions,
 };
 
