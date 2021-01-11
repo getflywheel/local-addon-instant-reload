@@ -14,14 +14,14 @@ import { toggleAutoEnableInstantReload } from '../ipcHelpers';
 import { RESTART_SITE } from '../localClient/mutations';
 import { SITE_STATUS_CHANGED } from '../localClient/subscriptions';
 import { GET_SITE } from '../localClient/queries';
-
-// import ipcAsync from '../../../_helpers/ipcAsync';
 import ChangeLog from './ChangeLog';
+
 // import { getElTrackAttrs } from '../../../../shared/constants/trackIdElements';
 // import { analyticsV2 } from '../../../../shared/helpers/analytics/AnalyticsV2API';
 
 // import styles from './InstantReloadContent.scss';
 import InformationSVG from '../assets/information.svg';
+import { FileChangeEntry } from '../../types';
 
 /**
  * @todo remove the stubbed styles object
@@ -49,6 +49,9 @@ You may need to disable caching plugins while using Live Reload.`;
  * - add scss loader & import styles correctly
  * - get changed files from main thread into redux store and then rendering in the UI
  * - check the site for the wpCacheEnabled value
+ *
+ * ______ Stretch Items ______
+ * - Add anaytics and element trackers (maybe do a new ticket for this one)
  * - look into axing redux to store autoEnableInstantReload and instead query for that shit from the Local API
  * 		(could use the site query + subscribe to more)
  */
@@ -66,7 +69,7 @@ const InstantReloadContent = (props: Props) => {
 		selectors.instantReloadEnabledForSite,
 	);
 
-	const fileLogs = useStoreSelector(
+	const fileLogs: FileChangeEntry[] = useStoreSelector(
 		selectors.siteLog,
 	);
 
@@ -74,21 +77,23 @@ const InstantReloadContent = (props: Props) => {
 		false,
 	);
 
+	/**
+	 * @todo handle loading / error states
+	 */
 	const { loading, error, data: siteQueryData } = useQuery(GET_SITE, {
 		variables: { siteID },
 	});
 
-
+	/**
+	 * @todo handle loading / error states
+	 */
 	const { loading: subLoading, error: subError, data: siteStatusSubscriptionData } = useSubscription(SITE_STATUS_CHANGED);
-
 
 	const subscriptionResult = siteStatusSubscriptionData?.siteStatusChanged;
 
 	const siteStatus = subscriptionResult?.id === siteID
 		? subscriptionResult?.status
 		: siteQueryData?.status;
-
-	console.log('query shit....', siteQueryData, siteStatusSubscriptionData, siteStatus);
 
 	const [restartSite] = useMutation(RESTART_SITE, {
 		variables: { siteID },
@@ -144,10 +149,9 @@ const InstantReloadContent = (props: Props) => {
 					/>
 				</div>
 				<TableListRow className={styles.lastDetectedChange} label="Session Log">
-					{/* {$site?.sessionLog.length !== 0 */}
-						'TODO: HELLO!!!!!!!'
-						{/* ? `Last detected change: ${$site!.sessionLog[$site!.sessionLog.length - 1].timeChanged}` */}
-						{/* : null} */}
+					{fileLogs.length !== 0
+						? `Last detected change: ${fileLogs[fileLogs.length - 1].timeChanged}`
+						: null}
 				</TableListRow>
 				<div
 					className={classnames(
