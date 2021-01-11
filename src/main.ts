@@ -1,5 +1,5 @@
 import * as Local from '@getflywheel/local';
-import { getServiceContainer, HooksMain } from '@getflywheel/local/main';
+import { getServiceContainer, HooksMain, addIpcAsyncListener } from '@getflywheel/local/main';
 import InstantReload from './main/InstantReload';
 import { IPC_EVENTS } from './constants';
 
@@ -28,12 +28,6 @@ export default function (context: typeof serviceContainer.addonLoader.addonConte
 	HooksMain.addAction('siteStopped', async (site: Local.Site) => {
 		await instantReload.stopConnection(site);
 	});
-
-	const toggleInstantReloadFactory = (autoEnableInstantReload: boolean) => (_, siteID: string) => {
-		serviceContainer.siteData.updateSite(siteID, {
-			autoEnableInstantReload,
-		});
-	};
 
 	HooksMain.addFilter(
 		'routerServiceProxyPass',
@@ -74,10 +68,37 @@ export default function (context: typeof serviceContainer.addonLoader.addonConte
 		},
 	);
 
+	const toggleInstantReloadFactory = (autoEnableInstantReload: boolean) => (_, siteID: string) => {
+		serviceContainer.siteData.updateSite(siteID, {
+			autoEnableInstantReload,
+		});
+	};
+
 	/**
 	 * These IPC listeners are currently stubbed out waiting for the UI code port
 	 */
 	ipcMain.on(IPC_EVENTS.ENABLE_INSTANT_RELOAD, toggleInstantReloadFactory(true));
 
 	ipcMain.on(IPC_EVENTS.DISABLE_INSTANT_RELOAD, toggleInstantReloadFactory(false));
+
+	addIpcAsyncListener(IPC_EVENTS.GET_INITIAL_STATE, () => {
+		const sites = serviceContainer.siteData.getSites();
+		const siteIDs = Object.keys(sites);
+
+		return siteIDs.reduce((acc, siteID) => {
+			acc[siteID] = sites[siteID].autoEnableInstantReload;
+			return acc;
+		}, {});
+	});
+
+	addIpcAsyncListener(IPC_EVENTS.SET_AUTO_ENABLE_INSTANT_RELOAD, (siteID: string, autoEnableInstantReload: boolean) => {
+		let result;
+		try {
+			result = serviceContainer.siteData.updateSite(siteID, { autoEnableInstantReload });
+		} catch (err) {
+			console.error(err);
+		}
+
+		return result;
+	});
 }

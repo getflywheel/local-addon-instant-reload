@@ -37,6 +37,8 @@ export const INSTANT_RELOAD_EVENTS = {
 };
 
 export const IPC_EVENTS = {
-	ENABLE_INSTANT_RELOAD: 'enable-instant-reload',
-	DISABLE_INSTANT_RELOAD: 'disable-instant-reload',
+	ENABLE_INSTANT_RELOAD: 'instant-reload:enable-instant-reload',
+	DISABLE_INSTANT_RELOAD: 'instant-reload:disable-instant-reload',
+	GET_INITIAL_STATE: 'instant-reload:get-initial-state',
+	SET_AUTO_ENABLE_INSTANT_RELOAD: 'instant-reload:set-auto-enable-instant-reload',
 };
