@@ -9,11 +9,11 @@ import {
 	Text,
 	FlyTooltip,
 } from '@getflywheel/local-components';
-import { store, actions, selectors, useStoreSelector } from './store/store';
-import { toggleAutoEnableInstantReload } from './ipcHelpers';
-import { RESTART_SITE } from './localClient/mutations';
-import { SITE_STATUS_CHANGED } from './localClient/subscriptions';
-import { GET_SITE } from './localClient/queries';
+import { store, actions, selectors, useStoreSelector } from '../store/store';
+import { toggleAutoEnableInstantReload } from '../ipcHelpers';
+import { RESTART_SITE } from '../localClient/mutations';
+import { SITE_STATUS_CHANGED } from '../localClient/subscriptions';
+import { GET_SITE } from '../localClient/queries';
 
 // import ipcAsync from '../../../_helpers/ipcAsync';
 import ChangeLog from './ChangeLog';
@@ -21,7 +21,7 @@ import ChangeLog from './ChangeLog';
 // import { analyticsV2 } from '../../../../shared/helpers/analytics/AnalyticsV2API';
 
 // import styles from './InstantReloadContent.scss';
-import InformationSVG from './assets/information.svg';
+import InformationSVG from '../assets/information.svg';
 
 /**
  * @todo remove the stubbed styles object
