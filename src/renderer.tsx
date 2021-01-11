@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { ApolloProvider } from '@apollo/client';
 import { ipcAsync } from '@getflywheel/local/renderer';
 import { store, actions } from './renderer/store/store';
-import InstantReload from './renderer/InstantReloadContent';
+import InstantReload from './renderer/components/InstantReloadContent';
 import { IPC_EVENTS } from './constants';
 import { client } from './renderer/localClient/localGraphQLClient';
 import type { FileChangeEntry } from './types';

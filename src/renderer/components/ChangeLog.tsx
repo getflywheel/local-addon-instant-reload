@@ -1,5 +1,5 @@
 import React from 'react';
-import type { FileChangeEntry } from '../types';
+import type { FileChangeEntry } from '../../types';
 
 // import styles from './ChangeLog.scss';
 
