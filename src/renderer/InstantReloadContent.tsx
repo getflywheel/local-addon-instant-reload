@@ -16,7 +16,7 @@ import { SITE_STATUS_CHANGED } from './localClient/subscriptions';
 import { GET_SITE } from './localClient/queries';
 
 // import ipcAsync from '../../../_helpers/ipcAsync';
-// import InstantReloadSessionLog from './InstantReloadSessionLog';
+import ChangeLog from './ChangeLog';
 // import { getElTrackAttrs } from '../../../../shared/constants/trackIdElements';
 // import { analyticsV2 } from '../../../../shared/helpers/analytics/AnalyticsV2API';
 
@@ -49,6 +49,8 @@ You may need to disable caching plugins while using Live Reload.`;
  * - add scss loader & import styles correctly
  * - get changed files from main thread into redux store and then rendering in the UI
  * - check the site for the wpCacheEnabled value
+ * - look into axing redux to store autoEnableInstantReload and instead query for that shit from the Local API
+ * 		(could use the site query + subscribe to more)
  */
 
 
@@ -62,6 +64,10 @@ const InstantReloadContent = (props: Props) => {
 
 	const instantReloadChecked = useStoreSelector(
 		selectors.instantReloadEnabledForSite,
+	);
+
+	const fileLogs = useStoreSelector(
+		selectors.siteLog,
 	);
 
 	const [isInstantReloadToggleDisabled, disableToggle] = useState(
@@ -152,9 +158,9 @@ const InstantReloadContent = (props: Props) => {
 						},
 					)}
 				>
-					{/* <InstantReloadSessionLog */}
-						{/* sessionLog={$site?.sessionLog} */}
-					{/* /> */}
+					<ChangeLog
+						changeLog={fileLogs}
+					/>
 				</div>
 				{/**
 				$site?.hasWpCacheEnabled

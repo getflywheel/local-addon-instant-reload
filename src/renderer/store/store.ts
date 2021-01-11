@@ -52,7 +52,14 @@ const logSlice = createSlice({
 	reducers: {
 		fileChange: (state, action: PayloadAction<{ siteID: string, fileChangeEntry: FileChangeEntry }>) => {
 			const { siteID, fileChangeEntry } = action.payload;
+
+			if (!state[siteID]) {
+				state[siteID] = [];
+			}
+
 			state[siteID].push(fileChangeEntry);
+
+			console.log('reducer.........', siteID, fileChangeEntry)
 
 			return state;
 		},
