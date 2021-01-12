@@ -12,15 +12,8 @@ import {
 	childProcessMessagePromiseFactory,
 	workerFork,
 } from '@getflywheel/local/main';
-import {
-	IPC_EVENTS,
-	INSTANCE_START,
-	INSTANCE_STOP,
-	InstantReloadStateParams,
-	STATUSES,
-	InstantReloadStatus,
-	INSTANT_RELOAD_EVENTS,
-} from '../constants';
+import { IPC_EVENTS, INSTANT_RELOAD_EVENTS } from '../constants';
+import { STATUSES, InstantReloadStatus } from '../types';
 
 const serviceContainer = getServiceContainer().cradle;
 
@@ -106,7 +99,7 @@ export default class InstantReloadService {
 
 		this._browserSyncInstances[site.id] = null;
 
-		this._sendIPCEvent(INSTANCE_STOP, site.id);
+		this._sendIPCEvent(IPC_EVENTS.SITE_INSTANCE_STOP, site.id);
 
 		this._updateStatus(site.id, STATUSES.STOPPED);
 	}
@@ -193,10 +186,14 @@ export default class InstantReloadService {
 
 		const hasWpCacheEnabled = this.hasWpCache(site.id);
 
-		this._sendIPCEvent(INSTANCE_START, site.id, {
-			proxyUrl: `http://${hostname}:${port}`,
-			hasWpCacheEnabled,
-		} as InstantReloadStateParams);
+		this._sendIPCEvent(
+			IPC_EVENTS.SITE_INSTANCE_START,
+			site.id,
+			{
+				proxyUrl: `http://${hostname}:${port}`,
+				hasWpCacheEnabled,
+			},
+		);
 
 		return {
 			hostname,
