@@ -1,12 +1,17 @@
 import { useSelector, TypedUseSelectorHook, PayloadAction } from 'react-redux';
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { FileChangeEntry } from '../../types';
+import { stringify } from 'querystring';
 
 export { selectors } from './selectors';
 
 type LogSlice = { [siteID: string]: FileChangeEntry[] };
 
 type InstantReloadEnabledSlice = { [siteID: string]: boolean };
+
+type HasWpCacheEnabledSlice = { [siteID: string]: boolean };
+
+type ProxyUrlSlice = { [siteID: string]: string };
 
 const activeSiteIDSlice = createSlice({
 	name: 'activeSiteID',
@@ -59,7 +64,33 @@ const logSlice = createSlice({
 
 			state[siteID].push(fileChangeEntry);
 
-			console.log('reducer.........', siteID, fileChangeEntry)
+			return state;
+		},
+	},
+});
+
+const hasWpCacheEnabledSlice = createSlice({
+	name: 'hasWpCacheEnabled',
+	initialState: {} as HasWpCacheEnabledSlice,
+	reducers: {
+		setHasWpCacheEnabledBySiteID: (state, action: PayloadAction<{ siteID: string, hasWpCacheEnabled: boolean }>) => {
+			const { siteID, hasWpCacheEnabled } = action.payload;
+
+			state[siteID] = hasWpCacheEnabled;
+
+			return state;
+		},
+	},
+});
+
+const proxyUrlSlice = createSlice({
+	name: 'proxyUrl',
+	initialState: {} as ProxyUrlSlice,
+	reducers: {
+		setProxyUrlBySiteID: (state, action: PayloadAction<{ activeSiteIDSlice, proxyUrl: string }>) => {
+			const { siteID, proxyUrl } = action.payload;
+
+			state[siteID] = proxyUrl;
 
 			return state;
 		},
@@ -71,6 +102,8 @@ export const store = configureStore({
 		activeSiteID: activeSiteIDSlice.reducer,
 		instantReloadEnabled: instantReloadEnabledSlice.reducer,
 		log: logSlice.reducer,
+		hasWpCacheEnabled: hasWpCacheEnabledSlice.reducer,
+		proxyUrl: proxyUrlSlice.reducer,
 	},
 });
 
@@ -78,6 +111,8 @@ export const actions = {
 	...activeSiteIDSlice.actions,
 	...instantReloadEnabledSlice.actions,
 	...logSlice.actions,
+	...hasWpCacheEnabledSlice.actions,
+	...proxyUrlSlice.actions,
 };
 
 export type State = ReturnType<typeof store.getState>;

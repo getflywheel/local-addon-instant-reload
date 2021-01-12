@@ -8,7 +8,7 @@ import { store, actions } from './renderer/store/store';
 import InstantReload from './renderer/components/InstantReloadContent';
 import { IPC_EVENTS } from './constants';
 import { client } from './renderer/localClient/localGraphQLClient';
-import type { FileChangeEntry } from './types';
+import type { FileChangeEntry, InstanceStartPayload } from './types';
 
 const packageJSON = fs.readJsonSync(path.join(__dirname, '../package.json'));
 const addonName = packageJSON['productName'];
@@ -59,7 +59,16 @@ export default async function (context): Promise<void> {
 	});
 
 	ipcRenderer.on(IPC_EVENTS.FILE_CHANGED, (_, siteID: string, fileChangeEntry: FileChangeEntry) => {
-		console.log('ipc listener.....', siteID, fileChangeEntry)
 		store.dispatch(actions.fileChange({ siteID, fileChangeEntry }));
 	});
+
+	ipcRenderer.on(
+		IPC_EVENTS.SITE_INSTANCE_START,
+		(_, siteID, payload: InstanceStartPayload) => {
+			const { proxyUrl, hasWpCacheEnabled } = payload;
+
+			store.dispatch(actions.setHasWpCacheEnabledBySiteID({ siteID, hasWpCacheEnabled }));
+			store.dispatch(actions.setProxyUrlBySiteID({ siteID, proxyUrl }));
+		},
+	);
 }

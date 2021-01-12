@@ -1,32 +1,3 @@
-// export const INSTANT_RELOAD = {
-	// START: 'startInstantReload',
-	// STOP: 'stopInstantReload',
-	// FILE_CHANGED: 'instantReload:fileChanged',
-	// UPDATE_STATUS: 'instantReload:updateStatus',
-// };
-
-export const STATUSES = {
-	STOPPED: 'instantReload:stopped',
-	STARTED: 'instantReload:started',
-	STOPPING: 'instantReload:stopping',
-	STARTING: 'instantReload:starting',
-} as const;
-
-/**
- * A typescript way to dynamically get a type that is one of the values from STATUES
- * see: https://stackoverflow.com/questions/53662208/types-from-both-keys-and-values-of-object-in-typescript
- */
-type StatusKeys = keyof typeof STATUSES;
-export type InstantReloadStatus = typeof STATUSES[StatusKeys];
-
-export const INSTANCE_START = 'SiteInstance:Start';
-export const INSTANCE_STOP = 'SiteInstance:Stop';
-
-export interface InstantReloadStateParams {
-	proxyUrl: string
-	hasWpCacheEnabled: boolean
-}
-
 export const INSTANT_RELOAD_EVENTS = {
 	CREATE: 'create-instance',
 	GET: 'get-instance',
@@ -43,4 +14,6 @@ export const IPC_EVENTS = {
 	SET_AUTO_ENABLE_INSTANT_RELOAD: 'instant-reload:set-auto-enable-instant-reload',
 	UPDATE_STATUS: 'instant-reload:update-status',
 	FILE_CHANGED: 'instant-reload:file-changed',
+	SITE_INSTANCE_START: 'instant-reload:site-instance-start',
+	SITE_INSTANCE_STOP: 'instant-reload:site-instance-stop',
 };
