@@ -18,15 +18,10 @@ import ChangeLog from './ChangeLog';
 
 // import { getElTrackAttrs } from '../../../../shared/constants/trackIdElements';
 // import { analyticsV2 } from '../../../../shared/helpers/analytics/AnalyticsV2API';
+import type { FileChangeEntry } from '../../types';
 
-// import styles from './InstantReloadContent.scss';
+import styles from './InstantReloadContent.scss';
 import InformationSVG from '../assets/information.svg';
-import { FileChangeEntry } from '../../types';
-
-/**
- * @todo remove the stubbed styles object
- */
-const styles = {};
 
 interface Props {
 	match: { params: { siteID: string; } };
@@ -46,7 +41,7 @@ You may need to disable caching plugins while using Live Reload.`;
  * - ✅ Save change to disk
  * - ✅ Check if the site is running rather that doing the hardcode thing
  * - ✅ restart the site/instant reload
- * - add scss loader & import styles correctly
+ * - ✅ add scss loader & import styles correctly
  * - ✅ get changed files from main thread into redux store and then rendering in the UI
  * - check the site for the wpCacheEnabled value
  * - Replace the site URL row daddio with the BrowserSync url if in localhost routing mode
@@ -78,17 +73,11 @@ const InstantReloadContent = (props: Props) => {
 		false,
 	);
 
-	/**
-	 * @todo handle loading / error states
-	 */
-	const { loading, error, data: siteQueryData } = useQuery(GET_SITE, {
+	const { data: siteQueryData } = useQuery(GET_SITE, {
 		variables: { siteID },
 	});
 
-	/**
-	 * @todo handle loading / error states
-	 */
-	const { loading: subLoading, error: subError, data: siteStatusSubscriptionData } = useSubscription(SITE_STATUS_CHANGED);
+	const { data: siteStatusSubscriptionData } = useSubscription(SITE_STATUS_CHANGED);
 
 	const subscriptionResult = siteStatusSubscriptionData?.siteStatusChanged;
 
@@ -158,8 +147,8 @@ const InstantReloadContent = (props: Props) => {
 					className={classnames(
 						styles.sessionLogContainer,
 						{
-							// [styles.logSessionActive]: instantReloadChecked === true,
-							// [styles.logSessionInactive]: instantReloadChecked === false,
+							[styles.logSessionActive]: instantReloadChecked === true,
+							[styles.logSessionInactive]: instantReloadChecked === false,
 						},
 					)}
 				>
