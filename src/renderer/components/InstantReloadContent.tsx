@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useQuery, useMutation, useSubscription } from '@apollo/client';
 import classnames from 'classnames';
 import {
@@ -9,12 +9,13 @@ import {
 	Text,
 	FlyTooltip,
 } from '@getflywheel/local-components';
-import { store, actions, selectors, useStoreSelector } from '../store/store';
+import { selectors, useStoreSelector } from '../store/store';
 import { toggleAutoEnableInstantReload } from '../ipcHelpers';
 import { RESTART_SITE } from '../localClient/mutations';
 import { SITE_STATUS_CHANGED } from '../localClient/subscriptions';
 import { GET_SITE } from '../localClient/queries';
 import ChangeLog from './ChangeLog';
+import useActiveSiteID from './useActiveSiteID';
 
 // import { getElTrackAttrs } from '../../../../shared/constants/trackIdElements';
 // import { analyticsV2 } from '../../../../shared/helpers/analytics/AnalyticsV2API';
@@ -43,7 +44,7 @@ You may need to disable caching plugins while using Live Reload.`;
  * - ✅ restart the site/instant reload
  * - ✅ add scss loader & import styles correctly
  * - ✅ get changed files from main thread into redux store and then rendering in the UI
- * - check the site for the wpCacheEnabled value
+ * - ✅ check the site for the wpCacheEnabled value
  * - Replace the site URL row daddio with the BrowserSync url if in localhost routing mode
  *
  * ______ Stretch Items ______
@@ -57,9 +58,11 @@ You may need to disable caching plugins while using Live Reload.`;
 const InstantReloadContent = (props: Props) => {
 	const { siteID } = props.match.params;
 
-	useEffect(() => {
-		store.dispatch(actions.setActiveSiteID(siteID));
-	}, []);
+	useActiveSiteID(siteID);
+
+	// useEffect(() => {
+	// 	store.dispatch(actions.setActiveSiteID(siteID));
+	// }, []);
 
 	const instantReloadChecked = useStoreSelector(
 		selectors.instantReloadEnabledForSite,
@@ -67,6 +70,10 @@ const InstantReloadContent = (props: Props) => {
 
 	const fileLogs: FileChangeEntry[] = useStoreSelector(
 		selectors.siteLog,
+	);
+
+	const hasWpCacheEnabled: boolean  = useStoreSelector(
+		selectors.activeSiteHasWpCacheEnabled,
 	);
 
 	const [isInstantReloadToggleDisabled, disableToggle] = useState(
@@ -156,8 +163,7 @@ const InstantReloadContent = (props: Props) => {
 						changeLog={fileLogs}
 					/>
 				</div>
-				{/**
-				$site?.hasWpCacheEnabled
+				{hasWpCacheEnabled
 					? (
 						<div className={styles.wpCacheAlert}>
 							<Text>
@@ -165,15 +171,15 @@ const InstantReloadContent = (props: Props) => {
 								{' '}
 								<a
 									href="https://localwp.com/help-docs/getting-started-with-instant-reload/"
-									{...getElTrackAttrs('InstantReloadLearnMore')}
+									// {...getElTrackAttrs('InstantReloadLearnMore')}
 								>
 									Learn More
 								</a>
 							</Text>
 						</div>
-				)
+					)
 					: null
-				*/}
+				}
 			</TableList>
 		</SiteInfoInnerPane>
 	);

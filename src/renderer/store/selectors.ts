@@ -8,10 +8,9 @@ const instantReloadEnabled = (state) => state.instantReloadEnabled;
 
 const log = (state) => state.log;
 
-// createSelector<State, State, string>(
-// 	selectSelf,
-// 	(state) => state.activeSiteID,
-// );
+const hasWpCacheEnabled = (state) => state.hasWpCacheEnabled;
+
+const proxyUrl = (state) => state.proxyUrl;
 
 const instantReloadEnabledForSite = createSelector(
 	activeSiteID,
@@ -28,8 +27,22 @@ const siteLog = createSelector(
 	(activeSiteID, log) => log[activeSiteID] || [],
 );
 
+const activeSiteHasWpCacheEnabled = createSelector(
+	activeSiteID,
+	hasWpCacheEnabled,
+	(activeSiteID, hasWpCacheEnabled) => hasWpCacheEnabled[activeSiteID],
+);
+
+const activeSiteProxyUrl = createSelector(
+	activeSiteID,
+	proxyUrl,
+	(activeSiteID, proxyUrl) => proxyUrl[activeSiteID],
+);
+
 export const selectors = {
 	activeSiteID: (): string => activeSiteID(store.getState()),
 	instantReloadEnabledForSite: (): boolean => instantReloadEnabledForSite(store.getState()),
 	siteLog: (): FileChangeEntry[] => siteLog(store.getState()),
+	activeSiteHasWpCacheEnabled: (): boolean => activeSiteHasWpCacheEnabled(store.getState()),
+	activeSiteProxyUrl: (): string | null => activeSiteProxyUrl(store.getState()),
 };

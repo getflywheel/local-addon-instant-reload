@@ -1,7 +1,6 @@
 import { useSelector, TypedUseSelectorHook, PayloadAction } from 'react-redux';
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { FileChangeEntry } from '../../types';
-import { stringify } from 'querystring';
 
 export { selectors } from './selectors';
 
@@ -28,7 +27,7 @@ const instantReloadEnabledSlice = createSlice({
 	name: 'instantReloadEnabled',
 	initialState: {} as InstantReloadEnabledSlice,
 	reducers: {
-		setInitialState: (state, action: PayloadAction<InstantReloadEnabledSlice>) => {
+		setInstantReloadEnabledInitialState: (state, action: PayloadAction<InstantReloadEnabledSlice>) => {
 			state = action.payload;
 			return state;
 		},
@@ -87,6 +86,10 @@ const proxyUrlSlice = createSlice({
 	name: 'proxyUrl',
 	initialState: {} as ProxyUrlSlice,
 	reducers: {
+		setProxyUrlInitialState: (state, action: PayloadAction<ProxyUrlSlice>) => {
+			state = action.payload;
+			return state;
+		},
 		setProxyUrlBySiteID: (state, action: PayloadAction<{ activeSiteIDSlice, proxyUrl: string }>) => {
 			const { siteID, proxyUrl } = action.payload;
 
