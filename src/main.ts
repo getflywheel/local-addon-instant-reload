@@ -86,9 +86,19 @@ export default function (context: typeof serviceContainer.addonLoader.addonConte
 		const siteIDs = Object.keys(sites);
 
 		return siteIDs.reduce((acc, siteID) => {
-			acc[siteID] = sites[siteID].autoEnableInstantReload;
+			acc.autoEnableInstantReload[siteID] = sites[siteID].autoEnableInstantReload;
+
+			const instance = instantReload.getInstanceData(siteID);
+
+			if (instance) {
+				acc.proxyUrl[siteID] = instance.proxyUrl;
+			}
+
 			return acc;
-		}, {});
+		}, {
+			proxyUrl: {},
+			autoEnableInstantReload: {},
+		});
 	});
 
 	addIpcAsyncListener(IPC_EVENTS.SET_AUTO_ENABLE_INSTANT_RELOAD, (siteID: string, autoEnableInstantReload: boolean) => {
