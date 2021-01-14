@@ -16,10 +16,8 @@ import { SITE_STATUS_CHANGED } from '../localClient/subscriptions';
 import { GET_SITE } from '../localClient/queries';
 import ChangeLog from './ChangeLog';
 import useActiveSiteID from './useActiveSiteID';
-
-// import { getElTrackAttrs } from '../../../../shared/constants/trackIdElements';
-// import { analyticsV2 } from '../../../../shared/helpers/analytics/AnalyticsV2API';
 import type { FileChangeEntry } from '../../types';
+import { ANALYTIC_EVENTS, reportAnalytics } from '../analytics';
 
 import styles from './InstantReloadContent.scss';
 import InformationSVG from '../assets/information.svg';
@@ -47,11 +45,7 @@ You may need to disable caching plugins while using Live Reload.`;
  * - ✅ check the site for the wpCacheEnabled value
  * - ✅ Replace the site URL row daddio with the BrowserSync url if in localhost routing mode
  * - ✅ Add filter hook to open site function
- *
- * ______ Stretch Items ______
- * - Add anaytics and element trackers (maybe do a new ticket for this one)
- * - look into axing redux to store autoEnableInstantReload and instead query for that shit from the Local API
- * 		(could use the site query + subscribe to more)
+ * - ✅ Add anaytics and element trackers (maybe do a new ticket for this one)
  */
 
 
@@ -60,10 +54,6 @@ const InstantReloadContent = (props: Props) => {
 	const { siteID } = props.match.params;
 
 	useActiveSiteID(siteID);
-
-	// useEffect(() => {
-	// 	store.dispatch(actions.setActiveSiteID(siteID));
-	// }, []);
 
 	const instantReloadChecked = useStoreSelector(
 		selectors.instantReloadEnabledForSite,
@@ -105,6 +95,10 @@ const InstantReloadContent = (props: Props) => {
 			await restartSite();
 			disableToggle(false);
 		}
+
+		reportAnalytics(
+			instantReloadChecked ? ANALYTIC_EVENTS.TOGGLE_ON : ANALYTIC_EVENTS.TOGGLE_OFF,
+		);
 	};
 
 	return (
