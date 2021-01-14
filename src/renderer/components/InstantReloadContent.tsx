@@ -45,7 +45,8 @@ You may need to disable caching plugins while using Live Reload.`;
  * - ✅ add scss loader & import styles correctly
  * - ✅ get changed files from main thread into redux store and then rendering in the UI
  * - ✅ check the site for the wpCacheEnabled value
- * - Replace the site URL row daddio with the BrowserSync url if in localhost routing mode
+ * - ✅ Replace the site URL row daddio with the BrowserSync url if in localhost routing mode
+ * - ✅ Add filter hook to open site function
  *
  * ______ Stretch Items ______
  * - Add anaytics and element trackers (maybe do a new ticket for this one)
@@ -72,7 +73,7 @@ const InstantReloadContent = (props: Props) => {
 		selectors.siteLog,
 	);
 
-	const hasWpCacheEnabled: boolean  = useStoreSelector(
+	const hasWpCacheEnabled: boolean = useStoreSelector(
 		selectors.activeSiteHasWpCacheEnabled,
 	);
 
