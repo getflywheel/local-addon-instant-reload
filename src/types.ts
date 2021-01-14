@@ -5,7 +5,6 @@ export interface FileChangeEntry {
 	fileSize: string,
 }
 
-
 export const STATUSES = {
 	STOPPED: 'instantReload:stopped',
 	STARTED: 'instantReload:started',
@@ -24,3 +23,6 @@ export interface InstanceStartPayload {
 	proxyUrl: string
 	hasWpCacheEnabled: boolean
 }
+
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+export type GenericObject = { [key: string]: any };
