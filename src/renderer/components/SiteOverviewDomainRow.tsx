@@ -3,7 +3,6 @@ import { TableListRow } from '@getflywheel/local-components';
 import useActiveSiteID from './useActiveSiteID';
 import { selectors, useStoreSelector } from '../store/store';
 import type { Site } from '@getflywheel/local';
-import styles from './SiteOverviewDomainRow.scss';
 
 interface Props {
 	site: Site;
@@ -24,7 +23,6 @@ const SiteOverviewDomainRow = (props: Props) => {
 
 	return (
 		<TableListRow
-			classname={styles.InstantReload_SiteOverviewDomainRow}
 			label="Instant Reload Host"
 			selectable
 		>

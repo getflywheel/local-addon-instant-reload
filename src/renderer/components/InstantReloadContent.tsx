@@ -34,21 +34,6 @@ export interface InstantReloadState {
 export const wpCacheAlertCopy = `Live Reload works best when WP_CACHE is disabled.${' '}
 You may need to disable caching plugins while using Live Reload.`;
 
-
-/**
- * @todo
- * - ✅ Save change to disk
- * - ✅ Check if the site is running rather that doing the hardcode thing
- * - ✅ restart the site/instant reload
- * - ✅ add scss loader & import styles correctly
- * - ✅ get changed files from main thread into redux store and then rendering in the UI
- * - ✅ check the site for the wpCacheEnabled value
- * - ✅ Replace the site URL row daddio with the BrowserSync url if in localhost routing mode
- * - ✅ Add filter hook to open site function
- * - ✅ Add anaytics and element trackers (maybe do a new ticket for this one)
- */
-
-
 /* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
 const InstantReloadContent = (props: Props) => {
 	const { siteID } = props.match.params;
