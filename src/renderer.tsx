@@ -1,7 +1,3 @@
-
-import type React from 'react';
-import type Electron from 'electron';
-import type ReactRouter from 'react-router';
 import fs from 'fs-extra';
 import path from 'path';
 import { Provider } from 'react-redux';
@@ -15,20 +11,6 @@ import { client } from './renderer/localClient/localGraphQLClient';
 import SiteOverviewDomainRow from './renderer/components/SiteOverviewDomainRow';
 import type { FileChangeEntry, InstanceStartPayload } from './types';
 
-type GenericHookSignature = (hookName: string, cb: (...args) => void) => void;
-
-interface Context {
-	React: React;
-	ReactRouter: ReactRouter;
-	hooks: {
-		addContent: GenericHookSignature;
-		addFilter: GenericHookSignature;
-	};
-	electron: typeof Electron;
-	events: {
-		send: (channel: string, ...args) => void;
-	};
-}
 
 const packageJSON = fs.readJsonSync(path.join(__dirname, '../package.json'));
 const addonName = packageJSON.productName;
@@ -42,7 +24,7 @@ const withProviders = (Component) => (props) => (
 	</ApolloProvider>
 );
 
-export default async function (context: Context): Promise<void> {
+export default async function (context): Promise<void> {
 	const { React, ReactRouter, hooks, electron } = context;
 	const { Route } = ReactRouter;
 	const { ipcRenderer } = electron;

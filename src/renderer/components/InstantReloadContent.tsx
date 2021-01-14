@@ -166,7 +166,6 @@ const InstantReloadContent = (props: Props) => {
 								{' '}
 								<a
 									href="https://localwp.com/help-docs/getting-started-with-instant-reload/"
-									// {...getElTrackAttrs('InstantReloadLearnMore')}
 								>
 									Learn More
 								</a>
