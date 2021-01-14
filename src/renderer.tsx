@@ -65,7 +65,7 @@ export default async function (context): Promise<void> {
 	));
 
 	hooks.addFilter(
-		'openSite:url',
+		'siteUrl',
 		(url: string, site: SiteJSON) => {
 			const state = store.getState();
 
