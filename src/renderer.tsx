@@ -1,9 +1,12 @@
 
+import type React from 'react';
+import type Electron from 'electron';
+import type ReactRouter from 'react-router';
 import fs from 'fs-extra';
 import path from 'path';
 import { Provider } from 'react-redux';
 import { ApolloProvider } from '@apollo/client';
-import type { Site } from '@getflywheel/local';
+import type { Site, SiteJSON } from '@getflywheel/local';
 import { ipcAsync } from '@getflywheel/local/renderer';
 import { store, actions } from './renderer/store/store';
 import InstantReload from './renderer/components/InstantReloadContent';
@@ -11,6 +14,21 @@ import { IPC_EVENTS } from './constants';
 import { client } from './renderer/localClient/localGraphQLClient';
 import SiteOverviewDomainRow from './renderer/components/SiteOverviewDomainRow';
 import type { FileChangeEntry, InstanceStartPayload } from './types';
+
+type GenericHookSignature = (hookName: string, cb: (...args) => void) => void;
+
+interface Context {
+	React: React;
+	ReactRouter: ReactRouter;
+	hooks: {
+		addContent: GenericHookSignature;
+		addFilter: GenericHookSignature;
+	};
+	electron: typeof Electron;
+	events: {
+		send: (channel: string, ...args) => void;
+	};
+}
 
 const packageJSON = fs.readJsonSync(path.join(__dirname, '../package.json'));
 const addonName = packageJSON.productName;
@@ -24,9 +42,9 @@ const withProviders = (Component) => (props) => (
 	</ApolloProvider>
 );
 
-export default async function (context): Promise<void> {
-	const { React, hooks, electron } = context;
-	const { Route } = context.ReactRouter;
+export default async function (context: Context): Promise<void> {
+	const { React, ReactRouter, hooks, electron } = context;
+	const { Route } = ReactRouter;
 	const { ipcRenderer } = electron;
 
 	const { autoEnableInstantReload, proxyUrl } = await ipcAsync(IPC_EVENTS.GET_INITIAL_STATE);
@@ -63,6 +81,20 @@ export default async function (context): Promise<void> {
 			site={site}
 		/>
 	));
+
+	hooks.addFilter(
+		'openSite:url',
+		(url: string, site: SiteJSON) => {
+			const state = store.getState();
+
+			/* @ts-ignore ignoring the next line since TS doesn't know about the presence of localhostRouting */
+			if (global.localhostRouting && state.instantReloadEnabled[site.id]) {
+				return state.proxyUrl[site.id];
+			}
+
+			return url;
+		},
+	);
 
 	ipcRenderer.on(IPC_EVENTS.FILE_CHANGED, (_, siteID: string, fileChangeEntry: FileChangeEntry) => {
 		store.dispatch(actions.fileChange({ siteID, fileChangeEntry }));
