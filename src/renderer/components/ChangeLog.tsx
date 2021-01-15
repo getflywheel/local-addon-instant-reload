@@ -2,7 +2,6 @@ import React from 'react';
 import type { FileChangeEntry } from '../../types';
 import styles from './ChangeLog.scss';
 
-
 interface Props {
 	changeLog? : FileChangeEntry[];
 }

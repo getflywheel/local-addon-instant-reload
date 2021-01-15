@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChangeLog renders contents correctly 1`] = `
+<div
+  className=""
+>
+  <ul>
+    <li>
+      &gt;[4:20:00 PM] - Added - newfile.extension (121kb)
+    </li>
+  </ul>
+</div>
+`;
