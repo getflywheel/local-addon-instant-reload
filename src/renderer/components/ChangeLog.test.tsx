@@ -1,29 +1,24 @@
-
-/**
- * @jest-environment <rootDir>/test/JestEnvironmentLocalRenderer.js
- */
-
 import React from 'react';
 import { create, act } from 'react-test-renderer';
 import ChangeLog, { sessionLogPlaceholderCopy } from './ChangeLog';
+import type { FileChangeEntry } from '../../types';
+
+const dummyLogItem: FileChangeEntry = {
+	fileName: 'newfile.extension',
+	eventType: 'add',
+	timeChanged: '4:20:00 PM',
+	fileSize: '121kb',
+};
 
 const commonProps = {
-	sessionLog: [{
-		fileName: 'newfile.extension',
-		timeChanged: '4:20:00 PM',
-		fileSize: '121kb',
-	}],
+	changeLog: [dummyLogItem],
 };
 
 const makeTree = (props = {}) => {
 	let tree;
 	act(() => {
 		tree = create(
-			<ChangeLog
-				/* eslint-disable react/jsx-props-no-spreading */
-				{...props}
-				/* eslint-enable react/jsx-props-no-spreading */
-			/>,
+			<ChangeLog {...props} />,
 		);
 	});
 	return tree;
@@ -32,11 +27,7 @@ const makeTree = (props = {}) => {
 describe('ChangeLog', () => {
 	it('renders contents correctly', () => {
 		const tree = create(
-			<ChangeLog
-				/* eslint-disable react/jsx-props-no-spreading */
-				{...commonProps}
-				/* eslint-enable react/jsx-props-no-spreading */
-			/>,
+			<ChangeLog {...commonProps} />,
 		).toJSON();
 
 		expect(tree).toMatchSnapshot();
@@ -57,16 +48,23 @@ describe('ChangeLog', () => {
 
 		expect(sessionLog.length).toBe(1);
 
-		const newLogLine = [
-			{ fileName: '/wp-content/themes/twentytwenty/style.css', timeChanged: '3:01:45 PM', fileSize: '121kb' },
-			{ fileName: '/wp-content/themes/twentytwenty/style.css', timeChanged: '4:20:00 PM', fileSize: '125kb' },
-		];
 		act(() => {
 			tree.update(
 				<ChangeLog
-					/* eslint-disable react/jsx-props-no-spreading */
-					{...{ sessionLog: newLogLine }}
-					/* eslint-enable react/jsx-props-no-spreading */
+					changeLog={[
+						{
+							fileName: '/wp-content/themes/twentytwenty/style.css',
+							timeChanged: '3:01:45 PM',
+							fileSize: '121kb',
+							eventType: 'change',
+						},
+						{
+							fileName: '/wp-content/themes/twentytwenty/style.css',
+							timeChanged: '4:20:00 PM',
+							fileSize: '125kb',
+							eventType: 'change',
+						},
+					]}
 				/>,
 			);
 		});

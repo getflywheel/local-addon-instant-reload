@@ -27,7 +27,7 @@
     "watch-renderer": "yarn build-renderer --watch",
     "prepare": "yarn run build",
     "lint": "eslint .",
-    "test": "yarn jest src/**/*.test.ts"
+    "test": "yarn jest --config jest.config.js src/**/*.test.ts"
   },
   "devDependencies": {
     "@getflywheel/eslint-config-local": "^1.0.4",
