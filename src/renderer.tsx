@@ -2,7 +2,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import { Provider } from 'react-redux';
 import { ApolloProvider } from '@apollo/client';
-import type { Site, SiteJSON } from '@getflywheel/local';
+import type { Site } from '@getflywheel/local';
 import { ipcAsync } from '@getflywheel/local/renderer';
 import { store, actions } from './renderer/store/store';
 import InstantReload from './renderer/components/InstantReloadContent';
@@ -64,18 +64,25 @@ export default async function (context): Promise<void> {
 		/>
 	));
 
+	const urlFilterFactory = (wpAdmin: boolean) => (url: string, site: Site) => {
+		const state = store.getState();
+
+		/* @ts-ignore ignoring the next line since TS doesn't know about the presence of localhostRouting */
+		if (global.localhostRouting && state.instantReloadEnabled[site.id]) {
+			return `${state.proxyUrl[site.id]}${wpAdmin ? '/wp-admin' : ''}`;
+		}
+
+		return url;
+	};
+
 	hooks.addFilter(
 		'siteUrl',
-		(url: string, site: SiteJSON) => {
-			const state = store.getState();
+		urlFilterFactory(false),
+	);
 
-			/* @ts-ignore ignoring the next line since TS doesn't know about the presence of localhostRouting */
-			if (global.localhostRouting && state.instantReloadEnabled[site.id]) {
-				return state.proxyUrl[site.id];
-			}
-
-			return url;
-		},
+	hooks.addFilter(
+		'siteAdminUrl',
+		urlFilterFactory(true),
 	);
 
 	ipcRenderer.on(IPC_EVENTS.FILE_CHANGED, (_, siteID: string, fileChangeEntry: FileChangeEntry) => {
