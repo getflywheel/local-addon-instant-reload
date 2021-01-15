@@ -2,7 +2,7 @@
 
 exports[`ChangeLog renders contents correctly 1`] = `
 <div
-  className=""
+  className="sessionLogContainer"
 >
   <ul>
     <li>
