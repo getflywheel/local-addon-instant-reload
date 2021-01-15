@@ -1,7 +1,12 @@
 module.exports = {
+	moduleDirectories: [
+		'node_modules',
+		'test',
+		'src',
+	],
 	moduleNameMapper: {
-		'^@getflywheel/local/renderer': '<rootDir>/test/mockLocalRenderer.ts',
-		'\\.(css|sass|scss)$': '<rootDir>/test/CSSStub.ts',
+		'^@getflywheel/local/renderer': '<rootDir>/__mocks__/localRenderer.ts',
+		'\.(css|sass|scss)$': 'identity-obj-proxy',
 	},
 	preset: 'ts-jest',
 	setupFilesAfterEnv: ['jest-extended'],

@@ -1,5 +1,6 @@
 import React from 'react';
 import type { FileChangeEntry } from '../../types';
+/* @ts-ignore ignore for now due to IDE's and tests not using Webpack rules/compilation to recognize this */
 import styles from './ChangeLog.scss';
 
 interface Props {
