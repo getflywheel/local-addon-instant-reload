@@ -10,6 +10,7 @@ import { IPC_EVENTS } from './constants';
 import { client } from './renderer/localClient/localGraphQLClient';
 import SiteOverviewDomainRow from './renderer/components/SiteOverviewDomainRow';
 import type { FileChangeEntry, InstanceStartPayload } from './types';
+import StatusIndidcator from './renderer/components/StatusIndicator';
 
 
 const packageJSON = fs.readJsonSync(path.join(__dirname, '../package.json'));
@@ -24,6 +25,18 @@ const withProviders = (Component) => (props) => (
 	</ApolloProvider>
 );
 
+const withApolloProvider = (Component) => (props) => (
+	<ApolloProvider client={client}>
+		<Component {...props} />
+	</ApolloProvider>
+);
+
+const withStoreProvider = (Component) => (props) => (
+	<Provider store={store}>
+		<Component {...props} />
+	</Provider>
+);
+
 export default async function (context): Promise<void> {
 	const { React, ReactRouter, hooks, electron } = context;
 	const { Route } = ReactRouter;
@@ -33,8 +46,9 @@ export default async function (context): Promise<void> {
 	store.dispatch(actions.setInstantReloadEnabledInitialState(autoEnableInstantReload));
 	store.dispatch(actions.setProxyUrlInitialState(proxyUrl));
 
-	const InstantReloadHOC = withProviders(InstantReload);
-	const SiteOverviewDomainRowHOC = withProviders(SiteOverviewDomainRow);
+	const InstantReloadHOC = withApolloProvider(withStoreProvider(InstantReload));
+	const SiteOverviewDomainRowHOC = withStoreProvider(SiteOverviewDomainRow);
+	const StatusIndicatorHOC = withStoreProvider(StatusIndidcator);
 
 	// Create the route/page of content that will be displayed when the menu option is clicked
 	hooks.addContent('routesSiteInfo', () => (
@@ -62,6 +76,10 @@ export default async function (context): Promise<void> {
 		<SiteOverviewDomainRowHOC
 			site={site}
 		/>
+	));
+
+	hooks.addContent('SiteInfo_Top_TopRight', (site: Site, siteStatus: string) => (
+		<StatusIndicatorHOC siteID={site.id} />
 	));
 
 	const urlFilterFactory = (wpAdmin: boolean) => (url: string, site: Site) => {
