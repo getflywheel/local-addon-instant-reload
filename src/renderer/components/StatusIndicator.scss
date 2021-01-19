@@ -1,0 +1,32 @@
+@import '../../../node_modules/@getflywheel/local-components/src/styles/_partials/index';
+
+.InstantReload_Indicator {
+	height: 20px;
+	font-weight: 700;
+	text-transform: uppercase;
+	font-size: 11px;
+	padding-right: 10px;
+	margin-top: -2px;
+	@include theme-color-gray75-else-gray25;
+
+	svg {
+		width: 8px;
+		height: 8px;
+		vertical-align: text-top;
+		margin: 1.5px 5px;
+
+		circle,
+		path {
+			fill: $gray15;
+		}
+	}
+}
+
+.InstantReload_Enabled {
+	svg {
+		circle,
+		path {
+			fill: $green;
+		}
+	}
+}
