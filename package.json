@@ -82,10 +82,12 @@
     "subscriptions-transport-ws": "^0.9.18"
   },
   "bundledDependencies": [
+    "@getflywheel/local-components",
     "@getflywheel/local",
     "@getflywheel/local-browsersync",
     "fs-extra",
-    "get-port"
+	"get-port",
+	"lodash"
   ],
   "engines": {
     "local-by-flywheel": "^5.9.6"
