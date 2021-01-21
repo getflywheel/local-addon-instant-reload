@@ -17,14 +17,6 @@ const packageJSON = fs.readJsonSync(path.join(__dirname, '../package.json'));
 const addonName = packageJSON.productName;
 const addonID = packageJSON.slug;
 
-const withProviders = (Component) => (props) => (
-	<ApolloProvider client={client}>
-		<Provider store={store}>
-			<Component {...props} />
-		</Provider>
-	</ApolloProvider>
-);
-
 const withApolloProvider = (Component) => (props) => (
 	<ApolloProvider client={client}>
 		<Component {...props} />
@@ -78,7 +70,7 @@ export default async function (context): Promise<void> {
 		/>
 	));
 
-	hooks.addContent('SiteInfo_Top_TopRight', (site: Site, siteStatus: string) => (
+	hooks.addContent('SiteInfo_Top_TopRight', (site: Site) => (
 		<StatusIndicatorHOC siteID={site.id} />
 	));
 
