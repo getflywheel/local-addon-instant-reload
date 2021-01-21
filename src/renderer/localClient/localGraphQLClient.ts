@@ -8,7 +8,6 @@ import { setContext } from '@apollo/client/link/context';
 import { getMainDefinition } from '@apollo/client/utilities';
 import readGraphQLConfig from './readGraphQLConfig';
 
-
 const {
 	url,
 	authToken,
