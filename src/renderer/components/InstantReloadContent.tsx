@@ -18,12 +18,12 @@ import ChangeLog from './ChangeLog';
 import useActiveSiteID from './useActiveSiteID';
 import type { FileChangeEntry } from '../../types';
 import { ANALYTIC_EVENTS, reportAnalytics } from '../analytics';
-
+import type { Site } from '@getflywheel/local';
 import styles from './InstantReloadContent.scss';
 import InformationSVG from '../assets/information.svg';
 
 interface Props {
-	match: { params: { siteID: string; } };
+	site: Site;
 }
 
 export interface InstantReloadState {
@@ -36,7 +36,7 @@ You may need to disable caching plugins while using Live Reload.`;
 
 /* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
 const InstantReloadContent = (props: Props) => {
-	const { siteID } = props.match.params;
+	const siteID = props?.site?.id;
 
 	useActiveSiteID(siteID);
 
