@@ -12,7 +12,6 @@ import SiteOverviewDomainRow from './renderer/components/SiteOverviewDomainRow';
 import type { FileChangeEntry, InstanceStartPayload } from './types';
 import StatusIndidcator from './renderer/components/StatusIndicator';
 
-
 const packageJSON = fs.readJsonSync(path.join(__dirname, '../package.json'));
 const addonName = packageJSON.productName;
 const addonID = packageJSON.slug;
@@ -31,7 +30,7 @@ const withStoreProvider = (Component) => (props) => (
 
 export default async function (context): Promise<void> {
 	const { React, ReactRouter, hooks, electron } = context;
-	const { Route } = ReactRouter;
+	// const { Route } = ReactRouter;
 	const { ipcRenderer } = electron;
 
 	const { autoEnableInstantReload, proxyUrl } = await ipcAsync(IPC_EVENTS.GET_INITIAL_STATE);
@@ -42,23 +41,14 @@ export default async function (context): Promise<void> {
 	const SiteOverviewDomainRowHOC = withStoreProvider(SiteOverviewDomainRow);
 	const StatusIndicatorHOC = withStoreProvider(StatusIndidcator);
 
-	// Create the route/page of content that will be displayed when the menu option is clicked
-	hooks.addContent('routesSiteInfo', () => (
-		<Route
-			key={`${addonID}-addon`}
-			path={`/main/site-info/:siteID/${addonID}`}
-			render={(props) => <InstantReloadHOC {...props} />}
-		/>
-	));
-
 	// Add menu option within the site menu bar
-	hooks.addFilter('siteInfoMoreMenu', (menu, site) => {
+	hooks.addFilter('siteInfoToolsItem', (menu) => {
 		menu.push({
-			label: `${addonName}`,
-			enabled: true,
-			click: () => {
-				context.events.send('goToRoute', `/main/site-info/${site.id}/${addonID}`);
-			},
+			path: `/${addonID}`,
+			menuItem: `${addonName}`,
+			render: ({ site }) => (
+				< InstantReloadHOC site={site}/>
+			),
 		});
 
 		return menu;
