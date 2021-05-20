@@ -8,7 +8,6 @@ import { store, actions } from './renderer/store/store';
 import InstantReload from './renderer/components/InstantReloadContent';
 import { IPC_EVENTS } from './constants';
 import { client } from './renderer/localClient/localGraphQLClient';
-import SiteOverviewDomainRow from './renderer/components/SiteOverviewDomainRow';
 import type { FileChangeEntry, InstanceStartPayload } from './types';
 import StatusIndidcator from './renderer/components/StatusIndicator';
 
@@ -29,8 +28,7 @@ const withStoreProvider = (Component) => (props) => (
 );
 
 export default async function (context): Promise<void> {
-	const { React, ReactRouter, hooks, electron } = context;
-	// const { Route } = ReactRouter;
+	const { React, hooks, electron } = context;
 	const { ipcRenderer } = electron;
 
 	const { autoEnableInstantReload, proxyUrl } = await ipcAsync(IPC_EVENTS.GET_INITIAL_STATE);
@@ -38,7 +36,6 @@ export default async function (context): Promise<void> {
 	store.dispatch(actions.setProxyUrlInitialState(proxyUrl));
 
 	const InstantReloadHOC = withApolloProvider(withStoreProvider(InstantReload));
-	const SiteOverviewDomainRowHOC = withStoreProvider(SiteOverviewDomainRow);
 	const StatusIndicatorHOC = withStoreProvider(StatusIndidcator);
 
 	// Add menu option within the site menu bar
@@ -47,18 +44,12 @@ export default async function (context): Promise<void> {
 			path: `/${addonID}`,
 			menuItem: `${addonName}`,
 			render: ({ site }) => (
-				< InstantReloadHOC site={site}/>
+				<InstantReloadHOC site={site}/>
 			),
 		});
 
 		return menu;
 	});
-
-	hooks.addContent('SiteInfoOverview_TableList', (site: Site) => (
-		<SiteOverviewDomainRowHOC
-			site={site}
-		/>
-	));
 
 	hooks.addContent('SiteInfo_Top_TopRight', (site: Site) => (
 		<StatusIndicatorHOC siteID={site.id} />

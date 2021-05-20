@@ -1,9 +1,16 @@
 import { ipcAsync } from '@getflywheel/local/renderer';
+import { ipcRenderer } from 'electron';
 import { IPC_EVENTS } from '../constants';
 import { store, actions } from './store/store';
 
 export const toggleAutoEnableInstantReload = async (siteID: string, enabled: boolean): Promise<void> => {
 	store.dispatch(actions.setInstantReloadEnabledBySiteID({ siteID, enabled }));
+
+	if (enabled) {
+		ipcRenderer.send(IPC_EVENTS.ENABLE_INSTANT_RELOAD, siteID);
+	} else {
+		ipcRenderer.send(IPC_EVENTS.DISABLE_INSTANT_RELOAD, siteID);
+	}
 
 	/**
 	 * Save autoenabled Instant Reload setting to disk
