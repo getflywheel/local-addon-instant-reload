@@ -57,27 +57,6 @@ export default async function (context): Promise<void> {
 		<StatusIndicatorHOC siteID={site.id} />
 	));
 
-	const urlFilterFactory = (wpAdmin: boolean) => (url: string, site: Site) => {
-		const state = store.getState();
-
-		/* @ts-ignore ignoring the next line since TS doesn't know about the presence of localhostRouting */
-		if (global.localhostRouting && state.instantReloadRunning[site.id]) {
-			return `${state.proxyUrl[site.id]}${wpAdmin ? '/wp-admin' : ''}`;
-		}
-
-		return url;
-	};
-
-	hooks.addFilter(
-		'siteUrl',
-		urlFilterFactory(false),
-	);
-
-	hooks.addFilter(
-		'siteAdminUrl',
-		urlFilterFactory(true),
-	);
-
 	ipcRenderer.on(IPC_EVENTS.FILE_CHANGED, (_, siteID: string, fileChangeEntry: FileChangeEntry) => {
 		store.dispatch(actions.fileChange({ siteID, fileChangeEntry }));
 	});

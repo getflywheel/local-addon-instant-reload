@@ -6,8 +6,6 @@ import { IPC_EVENTS } from './constants';
 const serviceContainer = getServiceContainer().cradle;
 
 export default function (context: typeof serviceContainer.addonLoader.addonContext): void {
-	const { electron } = context;
-	const { ipcMain } = electron;
 	const instantReload = new InstantReload();
 
 	HooksMain.addAction('siteStarted', async (site: Local.Site) => {
@@ -67,17 +65,6 @@ export default function (context: typeof serviceContainer.addonLoader.addonConte
 			return hostname;
 		},
 	);
-
-	const toggleInstantReloadFactory = (autoEnableInstantReload: boolean) => (_, siteID: string) => {
-		serviceContainer.siteData.updateSite(siteID, {
-			autoEnableInstantReload,
-		});
-	};
-
-	// todo tyler - verify we need these?
-	// ipcMain.on(IPC_EVENTS.ENABLE_INSTANT_RELOAD, toggleInstantReloadFactory(true));
-
-	// ipcMain.on(IPC_EVENTS.DISABLE_INSTANT_RELOAD, toggleInstantReloadFactory(false));
 
 	addIpcAsyncListener(IPC_EVENTS.GET_INITIAL_STATE, () => {
 		const sites = serviceContainer.siteData.getSites();

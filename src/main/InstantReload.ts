@@ -4,12 +4,8 @@ import fs from 'fs-extra';
 import * as Local from '@getflywheel/local';
 import {
 	getServiceContainer,
-	/**
-	 * @todo remove ts-ignore once the new local api with this change is published
-	 */
-	/* @ts-ignore */
-	ChildProcessMessagePromiseHelper,
 	childProcessMessagePromiseFactory,
+	ChildProcessMessagePromiseHelper,
 	workerFork,
 } from '@getflywheel/local/main';
 import { IPC_EVENTS, INSTANT_RELOAD_EVENTS } from '../constants';
@@ -19,10 +15,6 @@ const serviceContainer = getServiceContainer().cradle;
 
 interface InstanceData {
 	childProcess: ChildProcess;
-	/**
-	 * @todo remove ts-ignore once the new local api with this change is published
-	 */
-	/* @ts-ignore */
 	processMessageHelper: ChildProcessMessagePromiseHelper;
 	hostname: string;
 	port: string;
