@@ -7,7 +7,7 @@ import styles from './StatusIndicator.scss';
 
 
 /* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
-const StatusIndidcator = () => {
+const StatusIndicator = () => {
 	const proxyUrl = useStoreSelector(
 		selectors.activeSiteProxyUrl,
 	);
@@ -25,4 +25,4 @@ const StatusIndidcator = () => {
 	);
 };
 
-export default StatusIndidcator;
+export default StatusIndicator;

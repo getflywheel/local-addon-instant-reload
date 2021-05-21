@@ -74,12 +74,10 @@ export default function (context: typeof serviceContainer.addonLoader.addonConte
 		});
 	};
 
-	/**
-	 * These IPC listeners are currently stubbed out waiting for the UI code port
-	 */
-	ipcMain.on(IPC_EVENTS.ENABLE_INSTANT_RELOAD, toggleInstantReloadFactory(true));
+	// todo tyler - verify we need these?
+	// ipcMain.on(IPC_EVENTS.ENABLE_INSTANT_RELOAD, toggleInstantReloadFactory(true));
 
-	ipcMain.on(IPC_EVENTS.DISABLE_INSTANT_RELOAD, toggleInstantReloadFactory(false));
+	// ipcMain.on(IPC_EVENTS.DISABLE_INSTANT_RELOAD, toggleInstantReloadFactory(false));
 
 	addIpcAsyncListener(IPC_EVENTS.GET_INITIAL_STATE, () => {
 		const sites = serviceContainer.siteData.getSites();
@@ -87,17 +85,20 @@ export default function (context: typeof serviceContainer.addonLoader.addonConte
 
 		return siteIDs.reduce((acc, siteID) => {
 			acc.autoEnableInstantReload[siteID] = sites[siteID].autoEnableInstantReload;
+			acc.instantReloadRunningBySite[siteID] = false;
 
 			const instance = instantReload.getInstanceData(siteID);
 
 			if (instance) {
 				acc.proxyUrl[siteID] = instance.proxyUrl;
+				acc.instantReloadRunningBySite[siteID] = true;
 			}
 
 			return acc;
 		}, {
 			proxyUrl: {},
 			autoEnableInstantReload: {},
+			instantReloadRunningBySite: {},
 		});
 	});
 

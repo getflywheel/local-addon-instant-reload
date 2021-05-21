@@ -9,7 +9,7 @@ import InstantReload from './renderer/components/InstantReloadContent';
 import { IPC_EVENTS } from './constants';
 import { client } from './renderer/localClient/localGraphQLClient';
 import type { FileChangeEntry, InstanceStartPayload } from './types';
-import StatusIndidcator from './renderer/components/StatusIndicator';
+import StatusIndicator from './renderer/components/StatusIndicator';
 
 const packageJSON = fs.readJsonSync(path.join(__dirname, '../package.json'));
 const addonName = packageJSON.productName;
@@ -31,12 +31,14 @@ export default async function (context): Promise<void> {
 	const { React, hooks, electron } = context;
 	const { ipcRenderer } = electron;
 
-	const { autoEnableInstantReload, proxyUrl } = await ipcAsync(IPC_EVENTS.GET_INITIAL_STATE);
-	store.dispatch(actions.setInstantReloadEnabledInitialState(autoEnableInstantReload));
+	const { autoEnableInstantReload, proxyUrl, instantReloadRunningBySite } = await ipcAsync(IPC_EVENTS.GET_INITIAL_STATE);
+
+	store.dispatch(actions.setInstantReloadAutoEnabledInitialState(autoEnableInstantReload));
+	store.dispatch(actions.setInstantReloadRunningInitialState(instantReloadRunningBySite));
 	store.dispatch(actions.setProxyUrlInitialState(proxyUrl));
 
 	const InstantReloadHOC = withApolloProvider(withStoreProvider(InstantReload));
-	const StatusIndicatorHOC = withStoreProvider(StatusIndidcator);
+	const StatusIndicatorHOC = withStoreProvider(StatusIndicator);
 
 	// Add menu option within the site menu bar
 	hooks.addFilter('siteInfoToolsItem', (menu) => {
@@ -59,7 +61,7 @@ export default async function (context): Promise<void> {
 		const state = store.getState();
 
 		/* @ts-ignore ignoring the next line since TS doesn't know about the presence of localhostRouting */
-		if (global.localhostRouting && state.instantReloadEnabled[site.id]) {
+		if (global.localhostRouting && state.instantReloadRunning[site.id]) {
 			return `${state.proxyUrl[site.id]}${wpAdmin ? '/wp-admin' : ''}`;
 		}
 
@@ -85,6 +87,7 @@ export default async function (context): Promise<void> {
 		(_, siteID: string, payload: InstanceStartPayload) => {
 			const { proxyUrl, hasWpCacheEnabled } = payload;
 
+			store.dispatch(actions.setInstantReloadRunningBySiteID({ siteID, enabled: true }));
 			store.dispatch(actions.setHasWpCacheEnabledBySiteID({ siteID, hasWpCacheEnabled }));
 			store.dispatch(actions.setProxyUrlBySiteID({ siteID, proxyUrl }));
 		},
@@ -93,6 +96,7 @@ export default async function (context): Promise<void> {
 	ipcRenderer.on(
 		IPC_EVENTS.SITE_INSTANCE_STOP,
 		(_, siteID: string) => {
+			store.dispatch(actions.setInstantReloadRunningBySiteID({ siteID, enabled: false }));
 			store.dispatch(actions.setProxyUrlBySiteID({ siteID, proxyUrl: null }));
 		},
 	);
