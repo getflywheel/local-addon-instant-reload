@@ -61,7 +61,7 @@ const InstantReloadContent = (props: Props) => {
 
 	const siteStatus = subscriptionResult?.id === siteID
 		? subscriptionResult?.status
-		: siteQueryData?.status;
+		: siteQueryData?.site.status;
 
 	const [restartSite] = useMutation(RESTART_SITE, {
 		variables: { siteID },

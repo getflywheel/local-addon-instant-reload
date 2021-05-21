@@ -505,16 +505,17 @@
     untildify "^4.0.0"
     url-parse "^1.4.4"
 
-"@getflywheel/local@^5.9.7":
-  version "5.9.7"
-  resolved "https://registry.yarnpkg.com/@getflywheel/local/-/local-5.9.7.tgz#58ed53316b642070f658baecbdb144acf1f0684f"
-  integrity sha512-2cp1iUvEjx3edJ6rZE63CyqKi3IudEc6hcMwOAjZZKV+bVKSN7+iBgmo+y3rWiA+phy4Fjk0JqFuX5qhMmn4Ag==
+"@getflywheel/local@^5.10.4":
+  version "5.10.4"
+  resolved "https://registry.yarnpkg.com/@getflywheel/local/-/local-5.10.4.tgz#207bb5e62e04c4749711b86d704caa81fa5b7350"
+  integrity sha512-YsDQ0nXjvzDaBdHzqMTPrIQfUijiNw2vtBMvoHyJCMg/a/EUxtlP16WjwKVy450iD0yhyH+6RZ5jcflyX+qX5w==
   dependencies:
     "@types/node" "^12.7.12"
     awilix "^4.2.5"
-    electron "9.3.1"
+    electron "^12.0.2"
     graphql "^15.4.0"
     graphql-subscriptions "^1.1.0"
+    graphql-tag "^2.11.0"
     graphql-tools "^4.0.1"
     react "^16.13.1"
     winston "^3.2.1"
@@ -906,15 +907,15 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.14.tgz#f7fd5f3cc8521301119f63910f0fb965c7d761ae"
   integrity sha512-UHnOPWVWV1z+VV8k6L1HhG7UbGBgIdghqF3l9Ny9ApPghbjICXkUJSd/b9gOgQfjM1r+37cipdw/HJ3F6ICEnQ==
 
-"@types/node@^12.0.12":
-  version "12.12.50"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.50.tgz#e9b2e85fafc15f2a8aa8fdd41091b983da5fd6ee"
-  integrity sha512-5ImO01Fb8YsEOYpV+aeyGYztcYcjGsBvN4D7G5r1ef2cuQOpymjWNQi5V0rKHE6PC2ru3HkoUr/Br2/8GUA84w==
-
 "@types/node@^12.7.12":
   version "12.12.17"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.17.tgz#191b71e7f4c325ee0fb23bc4a996477d92b8c39b"
   integrity sha512-Is+l3mcHvs47sKy+afn2O1rV4ldZFU7W8101cNlOd+MRbjM4Onida8jSZnJdTe/0Pcf25g9BNIUsuugmE6puHA==
+
+"@types/node@^14.6.2":
+  version "14.17.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.0.tgz#3ba770047723b3eeb8dc9fca02cce8a7fb6378da"
+  integrity sha512-w8VZUN/f7SSbvVReb9SWp6cJFevxb4/nkG65yLAya//98WgocKm5PLDAtSs5CtJJJM+kHmJjO/6mmYW4MHShZA==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -2984,13 +2985,13 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
-electron@9.3.1:
-  version "9.3.1"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-9.3.1.tgz#e301932c5c0537d8c9a8850d216d3ba454dbf55c"
-  integrity sha512-DScrhqBT4a54KfdF0EoipALpHmdQTn3m7SSCtbpTcEcG+UDUiXad2cOfW6DHeVH7N+CVDKDG12q2PhVJjXkFAA==
+electron@^12.0.2:
+  version "12.0.9"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-12.0.9.tgz#d582afa8f6fc0c429606f0961a4c89b376994823"
+  integrity sha512-p5aEt1tIh/PYjwN+6MHTc5HtW529XR9r4Qlj9PPcSb5ubkotSsS0BtWJoRPhDenSAN8sgHk3sbZLxXPJtdnRYA==
   dependencies:
     "@electron/get" "^1.0.1"
-    "@types/node" "^12.0.12"
+    "@types/node" "^14.6.2"
     extract-zip "^1.0.3"
 
 elliptic@^6.5.3:
