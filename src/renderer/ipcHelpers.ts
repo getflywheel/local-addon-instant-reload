@@ -1,16 +1,9 @@
 import { ipcAsync } from '@getflywheel/local/renderer';
-import { ipcRenderer } from 'electron';
 import { IPC_EVENTS } from '../constants';
 import { store, actions } from './store/store';
 
 export const toggleAutoEnableInstantReload = async (siteID: string, enabled: boolean): Promise<void> => {
-	store.dispatch(actions.setInstantReloadEnabledBySiteID({ siteID, enabled }));
-
-	if (enabled) {
-		ipcRenderer.send(IPC_EVENTS.ENABLE_INSTANT_RELOAD, siteID);
-	} else {
-		ipcRenderer.send(IPC_EVENTS.DISABLE_INSTANT_RELOAD, siteID);
-	}
+	store.dispatch(actions.setInstantReloadAutoEnabledBySiteID({ siteID, enabled }));
 
 	/**
 	 * Save autoenabled Instant Reload setting to disk
@@ -21,6 +14,6 @@ export const toggleAutoEnableInstantReload = async (siteID: string, enabled: boo
 	 * revert the redux store to the previous value if the write to disk fails for any reason
 	 */
 	if (!result) {
-		store.dispatch(actions.setInstantReloadEnabledBySiteID({ siteID, enabled: !enabled }));
+		store.dispatch(actions.setInstantReloadAutoEnabledBySiteID({ siteID, enabled: !enabled }));
 	}
 };

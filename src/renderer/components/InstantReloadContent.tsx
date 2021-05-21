@@ -41,7 +41,7 @@ const InstantReloadContent = (props: Props) => {
 	useActiveSiteID(siteID);
 
 	const instantReloadChecked = useStoreSelector(
-		selectors.instantReloadEnabledForSite,
+		selectors.instantReloadAutoEnabledForSite,
 	);
 
 	const fileLogs: FileChangeEntry[] = useStoreSelector(

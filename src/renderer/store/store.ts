@@ -6,7 +6,9 @@ export { selectors } from './selectors';
 
 type LogSlice = { [siteID: string]: FileChangeEntry[] };
 
-type InstantReloadEnabledSlice = { [siteID: string]: boolean };
+type InstantReloadAutoEnabledSlice = { [siteID: string]: boolean };
+
+type InstantReloadRunningSlice = { [siteID: string]: boolean };
 
 type HasWpCacheEnabledSlice = { [siteID: string]: boolean };
 
@@ -23,24 +25,49 @@ const activeSiteIDSlice = createSlice({
 	},
 });
 
-const instantReloadEnabledSlice = createSlice({
-	name: 'instantReloadEnabled',
-	initialState: {} as InstantReloadEnabledSlice,
+/**
+ * Manages whether Instant Reload is auto-enabled and will start when the site starts
+ * Keyed by site id
+ */
+const instantReloadAutoEnabledSlice = createSlice({
+	name: 'instantReloadAutoEnabled',
+	initialState: {} as InstantReloadAutoEnabledSlice,
 	reducers: {
-		setInstantReloadEnabledInitialState: (state, action: PayloadAction<InstantReloadEnabledSlice>) => {
+		setInstantReloadAutoEnabledInitialState: (state, action: PayloadAction<InstantReloadAutoEnabledSlice>) => {
 			state = action.payload;
 			return state;
 		},
-		setInstantReloadEnabledBySiteID: (state, action: PayloadAction<{ siteID: string, enabled: boolean }>) => {
+		setInstantReloadAutoEnabledBySiteID: (state, action: PayloadAction<{ siteID: string, enabled: boolean }>) => {
 			const { siteID, enabled } = action.payload;
 			state[siteID] = enabled;
 			return state;
 		},
-		toggleInstantReloadBySiteID: (state, action: PayloadAction<string>) => {
+		toggleInstantReloadAutoEnabledBySiteID: (state, action: PayloadAction<string>) => {
 			const siteID = action.payload;
 			const enabled = !state[siteID];
 			state[siteID] = enabled;
 
+			return state;
+		},
+	},
+});
+
+
+/**
+ * Manages whether Instant Reload has an active instance running
+ * Keyed by site id
+ */
+const instantReloadRunningSlice = createSlice({
+	name: 'instantReloadRunning',
+	initialState: {} as InstantReloadRunningSlice,
+	reducers: {
+		setInstantReloadRunningInitialState: (state, action: PayloadAction<InstantReloadAutoEnabledSlice>) => {
+			state = action.payload;
+			return state;
+		},
+		setInstantReloadRunningBySiteID: (state, action: PayloadAction<{ siteID: string, enabled: boolean }>) => {
+			const { siteID, enabled } = action.payload;
+			state[siteID] = enabled;
 			return state;
 		},
 	},
@@ -103,7 +130,8 @@ const proxyUrlSlice = createSlice({
 export const store = configureStore({
 	reducer: {
 		activeSiteID: activeSiteIDSlice.reducer,
-		instantReloadEnabled: instantReloadEnabledSlice.reducer,
+		instantReloadAutoEnabled: instantReloadAutoEnabledSlice.reducer,
+		instantReloadRunning: instantReloadRunningSlice.reducer,
 		log: logSlice.reducer,
 		hasWpCacheEnabled: hasWpCacheEnabledSlice.reducer,
 		proxyUrl: proxyUrlSlice.reducer,
@@ -112,7 +140,8 @@ export const store = configureStore({
 
 export const actions = {
 	...activeSiteIDSlice.actions,
-	...instantReloadEnabledSlice.actions,
+	...instantReloadAutoEnabledSlice.actions,
+	...instantReloadRunningSlice.actions,
 	...logSlice.actions,
 	...hasWpCacheEnabledSlice.actions,
 	...proxyUrlSlice.actions,
