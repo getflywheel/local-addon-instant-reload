@@ -26,11 +26,6 @@ interface Props {
 	site: Site;
 }
 
-export interface InstantReloadState {
-	instantReloadChecked: boolean | undefined;
-	isToggleDisabled: boolean;
-}
-
 export const wpCacheAlertCopy = `Live Reload works best when WP_CACHE is disabled.${' '}
 You may need to disable caching plugins while using Live Reload.`;
 
