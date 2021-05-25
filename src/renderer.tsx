@@ -65,12 +65,12 @@ export default async function (context): Promise<void> {
 
 	const urlFilterFactory = (wpAdmin: boolean) => (url: string, site: Site) => {
 		const state = store.getState();
-		console.log(state.instantReloadRunning, 'renderer.tsx line 62', global.localhostRouting && state.instantReloadRunning[site.id]);
+
 		/* @ts-ignore ignoring the next line since TS doesn't know about the presence of localhostRouting */
 		if (global.localhostRouting && state.instantReloadRunning[site.id]) {
 			return `${state.proxyUrl[site.id]}${wpAdmin ? '/wp-admin/' : ''}`;
 		}
-		console.log(url, 'renderer.tsx line 67 addon');
+
 		return url;
 	};
 
