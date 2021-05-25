@@ -11,7 +11,6 @@ interface Props {
 	host: string;
 }
 
-/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
 const SiteOverviewHostRow = (props: Props) => {
 	const { site, host } = props;
 	useActiveSiteID(site.id);
