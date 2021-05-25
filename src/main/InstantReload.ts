@@ -94,9 +94,6 @@ export default class InstantReloadService {
 		// needed to update the addon redux store
 		this._sendIPCEvent(IPC_EVENTS.SITE_INSTANCE_STOP, site.id);
 
-		// needed to update the core flywheel-local mobx store
-		this._sendIPCEvent(IPC_EVENTS.LOCAL_INSTANCE_STOP, site.id);
-
 		this._updateStatus(site.id, STATUSES.STOPPED);
 	}
 
@@ -185,16 +182,6 @@ export default class InstantReloadService {
 		// needed to update the addon redux store
 		this._sendIPCEvent(
 			IPC_EVENTS.SITE_INSTANCE_START,
-			site.id,
-			{
-				proxyUrl: `http://${hostname}:${port}`,
-				hasWpCacheEnabled,
-			},
-		);
-
-		// needed to update the core flywheel-local mobx store
-		this._sendIPCEvent(
-			IPC_EVENTS.LOCAL_INSTANCE_START,
 			site.id,
 			{
 				proxyUrl: `http://${hostname}:${port}`,

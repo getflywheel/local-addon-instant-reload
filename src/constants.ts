@@ -14,6 +14,4 @@ export const IPC_EVENTS = {
 	FILE_CHANGED: 'instant-reload:file-changed',
 	SITE_INSTANCE_START: 'instant-reload:site-instance-start',
 	SITE_INSTANCE_STOP: 'instant-reload:site-instance-stop',
-	LOCAL_INSTANCE_START: 'SiteInstance:Start',
-	LOCAL_INSTANCE_STOP: 'SiteInstance:Stop',
 };
