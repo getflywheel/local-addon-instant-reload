@@ -17,10 +17,7 @@ const proxyUrl = (state) => state.proxyUrl;
 const instantReloadAutoEnabledForSite = createSelector(
 	activeSiteID,
 	instantReloadAutoEnabled,
-	(activeSiteID, instantReloadAutoEnabled) => {
-		const res = instantReloadAutoEnabled[activeSiteID];
-		return res;
-	},
+	(activeSiteID, instantReloadAutoEnabled) => instantReloadAutoEnabled[activeSiteID],
 );
 
 const instantReloadRunningForSite = createSelector(
