@@ -61,7 +61,7 @@ const handleCreate = async (payload) => {
 	const instantReloadUrl: string = await new Promise((resolve) => {
 		instantReloadInstance.init({
 			proxy: {
-				target: `http://127.0.0.1:${payload.httpPort}`,
+				target: `http://localhost:${payload.httpPort}`,
 				proxyReq: [
 					/**
 					 * Site Domain routing mode requires the host header be set.
