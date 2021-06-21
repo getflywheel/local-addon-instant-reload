@@ -1,24 +1,32 @@
-# Local Boilerplate Add-on
+# Local Instant Reload Add-on
 
-https://build.localwp.com/
+A [Local](https://localwp.com/) add on that introduces live browser reloading while developing your WordPress site. This repository hosts the source code; if you simply want to use the add-on, download the latest version of local from [the release page](https://localwp.com/releases/) and install the add-on within the app.
 
-## Get Started with the Local Add-on Generator
 
-Get up and running with your new add-on quickly and easily with the [Local Add-on Generator](https://github.com/getflywheel/create-local-addon). It is super simple to set up, and can help you start developing your new add-on in no time!
+Currently this add-on performs live reloading through the use of a forked version of with [Browsersync](https://browsersync.io/).
 
-The generator uses this boilerplate add-on to get you started, making setup easy and fast. The README for the generator also has more information on how to create an amazing add-on for Local, so be sure to check it out!
+## Manual Installation & Development setup
 
-## Installation
-
+*If you haven't already, it is advised that you familiarize yourself with the basics of [electron](https://www.electronjs.org/).*
 ### Clone
 
-Clone the repository into the following directory depending on your platform:
+Clone the repository into one of the following directories depending on your platform:
 
--   macOS: `~/Library/Application Support/Local/addons`
+-   macOS: `~/Library/Application\ Support/Local/addons`
 -   Windows: `C:\Users\username\AppData\Roaming\Local\addons`
--   Debian Linux: `~/.config/Local/addons`
+-   Linux: `~/.config/Local/addons`
 
-*You can replace 'Local' with 'Local Beta' if you want to create the add-on for Local Beta.*
+*You need to replace 'Local' with 'Local Beta' in the above paths if you want to create the add-on for Local Beta.*
+
+If you prefer to clone your source code elsewhere, you can do so and then symlink that directory to one in the above mentioned directories.
+
+An example of this on MacOS would look like:
+
+```
+git clone git@github.com:getflywheel/local-addon-instant-reload.git ~/code
+
+ln -s ~/code/local-addon-instant-reload ~/Library/Application\ Support/Local/addons
+```
 
 ### Install Add-on Dependencies
 
@@ -31,6 +39,15 @@ Clone the repository into the following directory depending on your platform:
 2. `yarn build` or `npm run build`
 3. Open Local and enable add-on
 
+If the enabling the add-on via the Local UI doesn't work for some reason, you can also enable it by updating the file `enabled-addons.json`. This is located at one of the following application specific paths.
+
+You'll want to make sure that the json file includes:
+
+`"@getflywheel/local-addon-instant-reload": true`
+
+-	macOS: `~/Library/Application\ Support/Local/enabled-addons.json`
+-   Linux: `~/.config/Local/enabled-addons.json`
+-   Windows: `C:\Users\<username>\AppData\Roaming\Local\addons\enabled-addons.json`
 ## Development
 
 ### External Libraries
@@ -38,6 +55,8 @@ Clone the repository into the following directory depending on your platform:
 - @getflywheel/local provides type definitions for Local's Add-on API.
 	- Node Module: https://www.npmjs.com/package/@getflywheel/local-components
 	- GitHub Repo: https://github.com/getflywheel/local-components
+
+It is worth noting the the TS definitions for this module are exposed and publicly availble. The actual code is injected once the add-on is loaded by Local. This can make writing tests a little tricky as the `@getflywheel/local/<main/renderer>` module isn't available outside of Local (ie testing unit testing environments). The best option is to mock out this module while running tests.
 
 - @getflywheel/local-components provides reusable React components to use in your Local add-on.
 	- Node Module: https://www.npmjs.com/package/@getflywheel/local
@@ -50,9 +69,7 @@ All files in `/src` will be transpiled to `/lib` using [TypeScript](https://www.
 
 ### Development Workflow
 
-If you are looking for help getting started, you can consult [the documentation for the add-on generator](https://github.com/getflywheel/create-local-addon#next-steps).
-
-You can consult the [Local add-on API](https://getflywheel.github.io/local-addon-api), which provides a wide range of values and functions for developing your add-on.
+For additional help getting started, you can consult the [Local add-on API](https://getflywheel.github.io/local-addon-api), which provides a wide range of values and functions for developing your add-on.
 
 ## License
 
