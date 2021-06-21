@@ -9,15 +9,15 @@
   "bgColor": "#51bb7b",
   "icon": "icon.svg",
   "slug": "local-addon-instant-reload",
-  "description": "A quick start to your amazing addon!",
+  "description": "A Local addon that provides live browser reloading while developing WordPress sites.",
   "renderer": "lib/renderer.js",
   "main": "lib/main.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/getflywheel/local-addon-boilerplate"
+    "url": "https://github.com/getflywheel/local-addon-instant-reload"
   },
   "bugs": {
-    "url": "https://github.com/getflywheel/local-addon-boilerplate/issues"
+    "url": "https://github.com/getflywheel/local-addon-instant-reload/issues"
   },
   "license": "MIT",
   "scripts": {
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@getflywheel/eslint-config-local": "^1.0.4",
-    "@getflywheel/local": "^5.10.4",
+    "@getflywheel/local": "^6.0.0",
     "@types/jest": "^26.0.19",
     "@types/jest-diff": "^24.3.0",
     "@types/node": "^12.7.12",
@@ -69,7 +69,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.6",
     "@getflywheel/local-browsersync": "^2.26.9",
-    "@getflywheel/local-components": "^15.3.0",
+    "@getflywheel/local-components": "^16.2.1",
     "@reduxjs/toolkit": "^1.5.0",
     "classnames": "^2.2.6",
     "cross-fetch": "^3.0.6",
@@ -90,6 +90,6 @@
 	"lodash"
   ],
   "engines": {
-    "local-by-flywheel": "^5.9.6"
+    "local-by-flywheel": "^6.0.0"
   }
 }
