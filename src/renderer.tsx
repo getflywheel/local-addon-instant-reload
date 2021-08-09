@@ -53,8 +53,25 @@ export default async function (context): Promise<void> {
 		return menu;
 	});
 
+	hooks.addFilter('SiteInfoOverview:localHostURLContent',
+		(host: string, siteID: string) => {
+			const state = store.getState();
+
+			store.dispatch(actions.setActiveSiteID(siteID));
+
+			let returnedHostValue = host;
+
+			const activeProxyUrl = state.proxyUrl;
+
+			if (state.instantReloadRunning[siteID] && global.localhostRouting) {
+				returnedHostValue = activeProxyUrl[siteID];
+			}
+
+			return returnedHostValue;
+		});
+
 	hooks.addContent('SiteInfo_Top_TopRight', (site: Site) => (
-		<StatusIndicatorHOC siteID={site.id} hooks={hooks} />
+		<StatusIndicatorHOC siteID={site.id} />
 	));
 
 	const urlFilterFactory = (wpAdmin: boolean) => (url: string, site: Site) => {
