@@ -1,7 +1,7 @@
 {
   "name": "@getflywheel/local-addon-instant-reload",
   "productName": "Instant Reload",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": "Local Team",
   "keywords": [
     "local-addon"
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@getflywheel/eslint-config-local": "^1.0.4",
-    "@getflywheel/local": ">=5.10.5",
+    "@getflywheel/local": ">=6.1.1",
     "@types/jest": "^26.0.19",
     "@types/jest-diff": "^24.3.0",
     "@types/node": "^12.7.12",
@@ -90,6 +90,6 @@
 	"lodash"
   ],
   "engines": {
-    "local-by-flywheel": ">=5.10.5"
+    "local-by-flywheel": ">=6.1.1"
   }
 }
