@@ -9,7 +9,7 @@ import {
 	Text,
 	FlyTooltip,
 } from '@getflywheel/local-components';
-import { store, selectors, useStoreSelector, actions } from '../store/store';
+import { selectors, useStoreSelector } from '../store/store';
 import { toggleAutoEnableInstantReload } from '../ipcHelpers';
 import { RESTART_SITE } from '../localClient/mutations';
 import { SITE_STATUS_CHANGED } from '../localClient/subscriptions';

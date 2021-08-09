@@ -12,7 +12,6 @@ interface Props {
 /* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
 const StatusIndicator = (props: Props) => {
 	const { siteID } = props;
-
 	useActiveSiteID(siteID);
 
 	const proxyUrl = useStoreSelector(
