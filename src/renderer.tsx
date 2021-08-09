@@ -10,7 +10,6 @@ import { IPC_EVENTS } from './constants';
 import { client } from './renderer/localClient/localGraphQLClient';
 import type { FileChangeEntry, InstanceStartPayload } from './types';
 import StatusIndicator from './renderer/components/StatusIndicator';
-import SiteOverviewHostRow from './renderer/components/SiteOverviewHostRow';
 
 const packageJSON = fs.readJsonSync(path.join(__dirname, '../package.json'));
 const addonName = packageJSON.productName;
@@ -40,7 +39,6 @@ export default async function (context): Promise<void> {
 
 	const InstantReloadHOC = withApolloProvider(withStoreProvider(InstantReload));
 	const StatusIndicatorHOC = withStoreProvider(StatusIndicator);
-	const SiteOverviewHostRowHOC = withStoreProvider(SiteOverviewHostRow);
 
 	// Add menu option within the site menu bar
 	hooks.addFilter('siteInfoToolsItem', (menu) => {
@@ -56,11 +54,7 @@ export default async function (context): Promise<void> {
 	});
 
 	hooks.addContent('SiteInfo_Top_TopRight', (site: Site) => (
-		<StatusIndicatorHOC siteID={site.id} />
-	));
-
-	hooks.addContent('SiteInfoOverview_TableList:Before', (site: Site, host: string) => (
-		<SiteOverviewHostRowHOC site={site} host={host}/>
+		<StatusIndicatorHOC siteID={site.id} hooks={hooks} />
 	));
 
 	const urlFilterFactory = (wpAdmin: boolean) => (url: string, site: Site) => {
