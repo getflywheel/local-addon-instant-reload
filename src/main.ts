@@ -41,7 +41,7 @@ export default function (context: typeof serviceContainer.addonLoader.addonConte
 	);
 
 	HooksMain.addFilter(
-		'liveLinksProServiceStartPort',
+		'liveLinksServiceStartPort',
 		(port: number, site: Local.Site) => {
 			const instance = instantReload.getInstanceData(site.id);
 
@@ -54,7 +54,7 @@ export default function (context: typeof serviceContainer.addonLoader.addonConte
 	);
 
 	HooksMain.addFilter(
-		'liveLinksProServiceStartHostname',
+		'liveLinksServiceStartHostname',
 		(hostname: number, site: Local.Site) => {
 			const instance = instantReload.getInstanceData(site.id);
 
