@@ -1,4 +1,3 @@
-import ws from 'ws';
 import fetch from 'cross-fetch';
 import { split } from '@apollo/client';
 import { ApolloClient, createHttpLink } from '@apollo/client/core';
@@ -34,7 +33,6 @@ const wsLink = new WebSocketLink({
 			authToken: `Bearer ${authToken}`,
 		},
 	},
-	webSocketImpl: ws,
 });
 
 const splitLink = split(
