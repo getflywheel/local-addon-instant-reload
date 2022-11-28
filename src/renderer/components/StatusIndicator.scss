@@ -5,17 +5,17 @@
 	align-items: center;
 	font-weight: 700;
 	padding-right: 10px;
-	@include theme-color-gray75-else-gray25;
+	@include theme-color-gray-else-gray25;
 
 	svg {
 		width: 10px;
 		height: 10px;
 		vertical-align: middle;
-		margin: 0px 5px 1px 5px;
+		margin: 0px 10px 1px 0px;
 
 		circle,
 		path {
-			fill: $gray15;
+			fill: $gray25;
 		}
 	}
 }
