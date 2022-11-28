@@ -24,16 +24,6 @@
 	padding-top: 5px;
 }
 
-.instantReloadTooltip {
-	position: absolute;
-	padding: 0;
-	margin-top: 4px;
-}
-
-.tooltipContent {
-	padding: 20px;
-}
-
 .addPaddingTop {
 	padding-top: 10px;
 }
@@ -61,21 +51,18 @@
 }
 
 .InstantReload_InfoIcon {
-	width: 14px;
-	height: auto;
-	margin-top: 11px;
 	svg {
 		margin: 2px 0 0 0;
 
 		path {
-			@include if-theme-light() {
-				fill: $gray25;
-			}
-			@include if-theme-dark() {
-				fill: $gray;
-			}
+			@include __theme-fill($gray, $gray75);
 		}
 	}
+}
+
+.InstantReload_Tooltip {
+	display: inline-block;
+	margin-left: -5px;
 }
 
 .sessionLogContainer {

@@ -7,7 +7,8 @@ import {
 	TableListRow,
 	Switch,
 	Text,
-	FlyTooltip,
+	Tooltip,
+	CircleInfoIcon
 } from '@getflywheel/local-components';
 import { selectors, useStoreSelector } from '../store/store';
 import { toggleAutoEnableInstantReload } from '../ipcHelpers';
@@ -20,7 +21,6 @@ import type { FileChangeEntry } from '../../types';
 import { ANALYTIC_EVENTS, reportAnalytics } from '../analytics';
 import type { Site } from '@getflywheel/local';
 import styles from './InstantReloadContent.scss';
-import InformationSVG from '../assets/information.svg';
 
 interface Props {
 	site: Site;
@@ -85,27 +85,26 @@ const InstantReloadContent = (props: Props) => {
 		<SiteInfoInnerPane>
 			<TableList className={styles.instantReloadTableList}>
 				<div className={styles.addPaddingTop}>
-					<TableListRow className={styles.instantReloadToggleHeader} label="Instant Reload">
-						<FlyTooltip
+					<TableListRow alignMiddle className={styles.instantReloadToggleHeader} label="Instant Reload">
+						<Tooltip
 							content={
 								(
-									<div className={styles.tooltipContent}>
+									<div>
 										Instant Reload watches CSS files for changes and
 										<br />
 										reloads them automatically in your browser
 									</div>
 								)
 							}
-							position="right"
-							width="max-content"
-							className={styles.instantReloadTooltip}
+							position="top"
+							className={styles.InstantReload_Tooltip}
 						>
 							<div className={styles.InstantReload_InfoIcon}>
 								<span>
-									<InformationSVG />
+									<CircleInfoIcon />
 								</span>
 							</div>
-						</FlyTooltip>
+						</Tooltip>
 					</TableListRow>
 				</div>
 				<div className={styles.instantReloadText}>
@@ -120,7 +119,7 @@ const InstantReloadContent = (props: Props) => {
 						flat
 					/>
 				</div>
-				<TableListRow className={styles.lastDetectedChange} label="Session Log">
+				<TableListRow className={styles.lastDetectedChange} label="Session log">
 					{fileLogs.length !== 0
 						? `Last detected change: ${fileLogs[fileLogs.length - 1].timeChanged}`
 						: null}
