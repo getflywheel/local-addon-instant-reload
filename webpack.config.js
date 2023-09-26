@@ -35,12 +35,6 @@ const commonConf = {
 			},
 		],
 	},
-	node: {
-		fs: 'empty',
-		/* eslint-disable-next-line camelcase */
-		child_process: 'empty',
-		__dirname: false,
-	},
 	resolve: {
 		extensions: ['.tsx', '.ts', '.jsx', '.js'],
 	},
