@@ -21,10 +21,9 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "yarn webpack --config webpack.config.js",
+    "build": "NODE_ENV=production webpack --config webpack.config.js",
     "clean": "rm -rf lib node_modules",
-    "watch": "yarn build --watch",
-    "watch-renderer": "yarn build-renderer --watch",
+    "watch": "webpack --config webpack.config.js --watch",
     "prepare": "yarn run build",
     "lint": "eslint .",
     "test": "yarn jest"

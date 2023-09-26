@@ -4,8 +4,8 @@ const nodeExternals = require('webpack-node-externals');
 const { merge } = require('webpack-merge');
 /* eslint-enable @typescript-eslint/no-var-requires */
 
-
 const commonConf = {
+	mode: process.env.NODE_ENV || 'development',
 	context: path.resolve(__dirname, 'src'),
 	externals: [
 		'@getflywheel/local/renderer',
