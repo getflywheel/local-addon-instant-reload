@@ -60,9 +60,7 @@ const configs = [
 			rules: [
 				{
 					test: /\.svg$/,
-					issuer: {
-						test: /\.[tj]sx?$/,
-					},
+					issuer: /\.[tj]sx?$/,
 					use: [
 						'babel-loader',
 						{
