@@ -10,6 +10,7 @@ import {
 } from '@getflywheel/local/main';
 import { IPC_EVENTS, INSTANT_RELOAD_EVENTS } from '../constants';
 import { STATUSES, InstantReloadStatus } from '../types';
+import log from '../logger';
 
 const serviceContainer = getServiceContainer().cradle;
 
@@ -26,19 +27,36 @@ export default class InstantReloadService {
 
 	private _sendIPCEvent: typeof serviceContainer.sendIPCEvent;
 
-	private _localLogger: typeof serviceContainer.localLogger;
-
 	/**
 	 * hash map of all browser sync instances by site id
 	 */
 	private _browserSyncInstances: { [key: string]: InstanceData | null } = {};
 
+	/**
+	 * Handle cleanup tasks when this class is destroyed, for example, when the
+	 * Local App quits.
+	 */
+	public onDestroy (): Promise<void[]> {
+		return this.stopAllConnections();
+	}
+
 	constructor () {
-		const { localLogger, siteData, sendIPCEvent } = serviceContainer;
+		const { siteData, sendIPCEvent } = serviceContainer;
 
 		this._siteData = siteData;
 		this._sendIPCEvent = sendIPCEvent;
-		this._localLogger = localLogger;
+	}
+
+	/**
+	 * Stops all running Browsersync processes
+	 */
+	public stopAllConnections (): Promise<void[]> {
+		const siteIds = Object.keys(this._browserSyncInstances);
+		const siteStopPromises = siteIds.map((siteId) => {
+			this.stopConnection(this._siteData.getSite(siteId));
+		});
+
+		return Promise.all(siteStopPromises);
 	}
 
 	/**
@@ -85,8 +103,11 @@ export default class InstantReloadService {
 		 */
 		try {
 			instanceData.childProcess.kill();
+			log.info(
+				`Killing Instant Reload child process for ${site.name}.`,
+			);
 		} catch (err) {
-			this._localLogger.debug(`Error killing Instant Reload child process for ${site.name}. ${err}`);
+			log.error(`Error killing Instant Reload child process for ${site.name}. ${err}`);
 		}
 
 		this._browserSyncInstances[site.id] = null;
