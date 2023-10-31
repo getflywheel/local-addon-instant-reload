@@ -10,6 +10,7 @@ import {
 } from '@getflywheel/local/main';
 import { IPC_EVENTS, INSTANT_RELOAD_EVENTS } from '../constants';
 import { STATUSES, InstantReloadStatus } from '../types';
+import log from '../logger';
 
 const serviceContainer = getServiceContainer().cradle;
 
@@ -26,8 +27,6 @@ export default class InstantReloadService {
 
 	private _sendIPCEvent: typeof serviceContainer.sendIPCEvent;
 
-	private _localLogger: typeof serviceContainer.localLogger;
-
 	/**
 	 * hash map of all browser sync instances by site id
 	 */
@@ -42,11 +41,10 @@ export default class InstantReloadService {
 	}
 
 	constructor () {
-		const { localLogger, siteData, sendIPCEvent } = serviceContainer;
+		const { siteData, sendIPCEvent } = serviceContainer;
 
 		this._siteData = siteData;
 		this._sendIPCEvent = sendIPCEvent;
-		this._localLogger = localLogger;
 	}
 
 	/**
@@ -105,11 +103,11 @@ export default class InstantReloadService {
 		 */
 		try {
 			instanceData.childProcess.kill();
-			this._localLogger.info(
+			log.info(
 				`Killing Instant Reload child process for ${site.name}.`,
 			);
 		} catch (err) {
-			this._localLogger.debug(`Error killing Instant Reload child process for ${site.name}. ${err}`);
+			log.error(`Error killing Instant Reload child process for ${site.name}. ${err}`);
 		}
 
 		this._browserSyncInstances[site.id] = null;

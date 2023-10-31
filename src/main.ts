@@ -3,6 +3,7 @@ import { asValue } from 'awilix';
 import { getServiceContainer, HooksMain, addIpcAsyncListener } from '@getflywheel/local/main';
 import InstantReload from './main/InstantReload';
 import { IPC_EVENTS } from './constants';
+import log from './logger';
 
 const localContainer = getServiceContainer();
 const serviceContainer = localContainer.cradle;
@@ -98,7 +99,7 @@ export default function (context: typeof serviceContainer.addonLoader.addonConte
 		try {
 			result = serviceContainer.siteData.updateSite(siteID, { autoEnableInstantReload });
 		} catch (err) {
-			console.error(err);
+			log.error(`Unable to enable InstantReload for ${siteID}: ${err.message}`);
 		}
 
 		return result;
