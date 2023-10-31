@@ -33,12 +33,32 @@ export default class InstantReloadService {
 	 */
 	private _browserSyncInstances: { [key: string]: InstanceData | null } = {};
 
+	/**
+	 * Handle cleanup tasks when this class is destroyed, for example, when the
+	 * Local App quits.
+	 */
+	public onDestroy (): Promise<void[]> {
+		return this.stopAllConnections();
+	}
+
 	constructor () {
 		const { localLogger, siteData, sendIPCEvent } = serviceContainer;
 
 		this._siteData = siteData;
 		this._sendIPCEvent = sendIPCEvent;
 		this._localLogger = localLogger;
+	}
+
+	/**
+	 * Stops all running Browsersync processes
+	 */
+	public stopAllConnections (): Promise<void[]> {
+		const siteIds = Object.keys(this._browserSyncInstances);
+		const siteStopPromises = siteIds.map((siteId) => {
+			this.stopConnection(this._siteData.getSite(siteId));
+		});
+
+		return Promise.all(siteStopPromises);
 	}
 
 	/**
@@ -85,6 +105,9 @@ export default class InstantReloadService {
 		 */
 		try {
 			instanceData.childProcess.kill();
+			this._localLogger.info(
+				`Killing Instant Reload child process for ${site.name}.`,
+			);
 		} catch (err) {
 			this._localLogger.debug(`Error killing Instant Reload child process for ${site.name}. ${err}`);
 		}

@@ -1,12 +1,16 @@
 import * as Local from '@getflywheel/local';
+import { asValue } from 'awilix';
 import { getServiceContainer, HooksMain, addIpcAsyncListener } from '@getflywheel/local/main';
 import InstantReload from './main/InstantReload';
 import { IPC_EVENTS } from './constants';
 
-const serviceContainer = getServiceContainer().cradle;
+const localContainer = getServiceContainer();
+const serviceContainer = localContainer.cradle;
 
 export default function (context: typeof serviceContainer.addonLoader.addonContext): void {
 	const instantReload = new InstantReload();
+
+	localContainer.register({ instantReload: asValue(instantReload) } as any);
 
 	HooksMain.addAction('siteStarted', async (site: Local.Site) => {
 		try {
