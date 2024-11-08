@@ -41,6 +41,24 @@ export default function (context: typeof serviceContainer.addonLoader.addonConte
 	);
 
 	HooksMain.addFilter(
+		'routerServiceLocationBlocks',
+		(locationBlocks: string, site: Local.Site) => {
+			const instance = instantReload.getInstanceData(site.id);
+			if (instance?.hostname && instance?.port) {
+				const browserSyncBlock = `
+		# BrowserSync WebSocket support
+		location ^~ /browser-sync/socket.io/ {
+			proxy_set_header Connection upgrade;
+			proxy_set_header Upgrade $http_upgrade;
+			proxy_pass http://${instance.hostname}:${instance.port};
+		}`;
+				return locationBlocks + browserSyncBlock;
+			}
+			return locationBlocks;
+		},
+	);
+
+	HooksMain.addFilter(
 		'liveLinksServiceStartPort',
 		(port: number, site: Local.Site) => {
 			const instance = instantReload.getInstanceData(site.id);
