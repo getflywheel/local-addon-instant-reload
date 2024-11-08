@@ -95,12 +95,7 @@ const handleCreate = async (payload) => {
 				],
 				proxyRes: [
 					(proxyRes) => {
-						// sets response header 'transfer-encoding' to undefined when running integration tests
-						// this header was causing parse errors when the proxy URL was called by fetch()
-						if (typeof process.env.JEST_WORKER_ID !== 'undefined') {
-							/* eslint-disable-next-line no-param-reassign */
-							proxyRes.headers['transfer-encoding'] = null;
-						}
+						delete proxyRes.headers['transfer-encoding'];
 					},
 				],
 			},
