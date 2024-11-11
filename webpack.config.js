@@ -33,6 +33,22 @@ const commonConf = {
 					},
 				],
 			},
+			{
+				test: /\.s[ac]ss$/i,
+				use: [
+					'style-loader',
+					{
+						loader: 'css-loader',
+						options: {
+							modules: true,
+							sourceMap: true,
+							importLoaders: 1,
+						},
+					},
+					'resolve-url-loader',
+					'sass-loader',
+				],
+			},
 		],
 	},
 	resolve: {
@@ -54,40 +70,8 @@ const configs = [
 			rules: [
 				{
 					test: /\.svg$/,
-					issuer: /\.[tj]sx?$/,
-					use: [
-						'babel-loader',
-						{
-							loader: 'react-svg-loader',
-							options: {
-								svgo: {
-									plugins: [
-										{
-											inlineStyles: { onlyMatchedOnce: false },
-										},
-									],
-								},
-							},
-						},
-					],
+					use: ['@svgr/webpack'],
 				},
-				{
-					test: /\.s[ac]ss$/i,
-					use: [
-						'style-loader',
-						{
-							loader: 'css-loader',
-							options: {
-								modules: true,
-								sourceMap: true,
-								importLoaders: 1,
-							},
-						},
-						// 'css-loader',
-						'resolve-url-loader',
-						'sass-loader',
-					],
-				  },
 			],
 		},
 		target: 'electron-renderer',
