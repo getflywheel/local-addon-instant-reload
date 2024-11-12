@@ -59,6 +59,28 @@ const handleCreate = async (payload) => {
 
 	const instantReloadUrl: string = await new Promise((resolve) => {
 		instantReloadInstance.init({
+			logPrefix: 'Instant Reload',
+			// @ts-expect-error: Temporarily ignoring this error until
+			// upstream fix is available:
+			//     https://github.com/BrowserSync/browser-sync/pull/2093
+			notify: {
+				styles: {
+					display: 'none',
+					padding: '15px',
+					fontFamily: 'sans-serif',
+					position: 'fixed',
+					fontSize: '1em',
+					zIndex: 9999,
+					right: '1em',
+					top: '1em',
+					borderBottomLeftRadius: '5px',
+					backgroundColor: '#419564',
+					margin: 0,
+					color: 'white',
+					textAlign: 'center',
+					pointerEvents: 'none',
+				},
+			},
 			proxy: {
 				target: `http://localhost:${payload.httpPort}`,
 				proxyReq: [
