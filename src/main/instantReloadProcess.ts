@@ -1,9 +1,8 @@
 import path from 'path';
 import fs from 'fs';
 import getPort from 'get-port';
-/* @ts-ignore */
-import browserSync from '@getflywheel/local-browsersync';
-import type BrowserSyncInstance from '@getflywheel/local-browsersync';
+import bs from 'browser-sync';
+import type { BrowserSyncInstance } from 'browser-sync';
 import { INSTANT_RELOAD_EVENTS } from '../constants';
 
 interface FileChangeResponse {
@@ -49,7 +48,7 @@ function processSafeSend (name) {
 }
 
 const handleCreate = async (payload) => {
-	instantReloadInstance = browserSync.create(payload.siteID);
+	instantReloadInstance = bs.create(payload.siteID);
 
 	// set a random port to init the Instant Reload session on if we are running tests.
 	let testInitOptions = {};
