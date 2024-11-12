@@ -89,7 +89,7 @@
     "lodash"
   ],
   "engines": {
-    "local-by-flywheel": ">=6.1.1"
+    "local-by-flywheel": ">=9.1.1"
   },
   "resolutions": {
     "ansi-regex": "5.0.1",
