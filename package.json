@@ -28,6 +28,12 @@
     "lint": "eslint .",
     "test": "yarn jest"
   },
+  "files": [
+    "lib/",
+    "package.json",
+    "README.md",
+    "icon.svg"
+  ],
   "devDependencies": {
     "@getflywheel/eslint-config-local": "^1.0.4",
     "@getflywheel/local": "^9",
