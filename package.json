@@ -84,7 +84,7 @@
   },
   "bundledDependencies": [
     "@getflywheel/local-components",
-    "@getflywheel/local-browsersync",
+	"browser-sync",
     "fs-extra",
     "get-port",
     "lodash"
