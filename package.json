@@ -8,7 +8,7 @@
   ],
   "bgColor": "#51bb7b",
   "icon": "icon.svg",
-  "slug": "local-addon-instant-reload",
+  "slug": "instant-reload",
   "description": "A Local addon that provides live browser reloading while developing WordPress sites.",
   "renderer": "lib/renderer.js",
   "main": "lib/main.js",
