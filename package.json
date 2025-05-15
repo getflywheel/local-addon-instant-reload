@@ -99,6 +99,7 @@
     "local-by-flywheel": ">=9.1.1"
   },
   "resolutions": {
-    "trim": "0.0.3"
+    "trim": "0.0.3",
+	"nanoid": "^3.3.8"
   }
 }
