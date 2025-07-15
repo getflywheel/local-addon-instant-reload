@@ -1107,16 +1107,16 @@
     react-truncate-markup "^3.0.0"
     untildify "^4.0.0"
 
-"@getflywheel/local@^9":
-  version "9.0.5"
-  resolved "https://registry.yarnpkg.com/@getflywheel/local/-/local-9.0.5.tgz#a56267340c06cef254cf25e000586b3efcd5f616"
-  integrity sha512-mSp77vYbJn0d1oIxtK0/uzK78P8px8k0pSxeEpbS9xh7xfl8FgS2JlbNKModUL5uEwS7mTJUEo7rGOhTAQi9bQ==
+"@getflywheel/local@^9.2.5":
+  version "9.2.5"
+  resolved "https://registry.yarnpkg.com/@getflywheel/local/-/local-9.2.5.tgz#a2bb78f64dd1badbdcf55cf6f2696e875cd547b4"
+  integrity sha512-ps7KxV6J7Wz3lRSqW+McGS/l+AgpAmYigCGpgyDgE+P31fwrmBJEDzySMW6FTAtApKJVO+YeR+uzUS+txSv3pg==
   dependencies:
-    "@types/node" "^18.18.0"
+    "@types/node" "^22.14.0"
     apollo-boost "^0.1.21"
     awilix "^4.2.5"
     cross-fetch "^3.1.5"
-    electron "25.8.4"
+    electron "^v35"
     graphql "^15.4.0"
     graphql-subscriptions "^1.1.0"
     graphql-tag "^2.11.0"
@@ -1849,12 +1849,19 @@
   dependencies:
     undici-types "~6.19.8"
 
-"@types/node@^18.11.18", "@types/node@^18.18.0":
+"@types/node@^18.18.0":
   version "18.19.64"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.64.tgz#122897fb79f2a9ec9c979bded01c11461b2b1478"
   integrity sha512-955mDqvO2vFf/oL7V3WiUtiz+BugyX8uVbaT2H8oj3+8dRyH2FLiNdowe7eNqRM7IOIZvzDH76EoAT+gwm6aIQ==
   dependencies:
     undici-types "~5.26.4"
+
+"@types/node@^22.14.0", "@types/node@^22.7.7":
+  version "22.16.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.16.4.tgz#00c763ad4d4e45f62d5a270c040ae1a799c7e38a"
+  integrity sha512-PYRhNtZdm2wH/NT2k/oAJ6/f2VD2N2Dag0lGlx2vWgMSJXGNmlce5MiTQzoWAiIJtso30mjnfQCOKVH+kAQC/g==
+  dependencies:
+    undici-types "~6.21.0"
 
 "@types/parse-glob@*":
   version "3.0.32"
@@ -3591,13 +3598,13 @@ electron-to-chromium@^1.5.41:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.56.tgz#3213f369efc3a41091c3b2c05bc0f406108ac1df"
   integrity sha512-7lXb9dAvimCFdvUMTyucD4mnIndt/xhRKFAlky0CyFogdnNmdPQNoHI23msF/2V4mpTxMzgMdjK4+YRlFlRQZw==
 
-electron@25.8.4:
-  version "25.8.4"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-25.8.4.tgz#b50877aac7d96323920437baf309ad86382cb455"
-  integrity sha512-hUYS3RGdaa6E1UWnzeGnsdsBYOggwMMg4WGxNGvAoWtmRrr6J1BsjFW/yRq4WsJHJce2HdzQXtz4OGXV6yUCLg==
+electron@^v35:
+  version "35.7.0"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-35.7.0.tgz#b362b0303ae1522790bb5ef37c9611a7e6b974f8"
+  integrity sha512-ZnbVqFK40pr83Jzw6IQ9pQT+obCG0DepSMKtOEe8WP2TgZbjvCOO4GzrR+a7Ze62JMRmtNOHsS4hFss6qjtSrQ==
   dependencies:
     "@electron/get" "^2.0.0"
-    "@types/node" "^18.11.18"
+    "@types/node" "^22.7.7"
     extract-zip "^2.0.1"
 
 emittery@^0.8.1:
@@ -7989,6 +7996,11 @@ undici-types@~6.19.8:
   version "6.19.8"
   resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-6.19.8.tgz#35111c9d1437ab83a7cdc0abae2f26d88eda0a02"
   integrity sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==
+
+undici-types@~6.21.0:
+  version "6.21.0"
+  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-6.21.0.tgz#691d00af3909be93a7faa13be61b3a5b50ef12cb"
+  integrity sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==
 
 unherit@^1.0.4:
   version "1.1.3"
