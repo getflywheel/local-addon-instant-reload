@@ -1,7 +1,7 @@
 {
   "name": "@getflywheel/local-addon-instant-reload",
   "productName": "Instant Reload",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "author": "Local Team",
   "keywords": [
     "local-addon"
