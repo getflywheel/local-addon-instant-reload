@@ -41,7 +41,7 @@
     "@types/browser-sync": "^2.29.0",
     "@types/jest": "^26.0.22",
     "@types/jest-diff": "^24.3.0",
-    "@types/node": "^18.18.0",
+	"@types/node": "^22.17",
     "@typescript-eslint/eslint-plugin": "^4.11.0",
     "@typescript-eslint/parser": "^4.11.0",
     "babel-loader": "^9.1.3",
