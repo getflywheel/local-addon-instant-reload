@@ -37,7 +37,7 @@
   "devDependencies": {
     "@getflywheel/eslint-config-local": "^1.0.4",
     "@getflywheel/local": "^9.2.5",
-    "@svgr/webpack": "^6.5.1",
+    "@svgr/webpack": "^8.1.0",
     "@types/browser-sync": "^2.29.0",
     "@types/jest": "^26.0.22",
     "@types/jest-diff": "^24.3.0",
