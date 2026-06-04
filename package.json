@@ -109,6 +109,7 @@
     "electron": "^42.2.0",
     "brace-expansion": "^1.1.12",
     "ws": "^8.20.1",
-	"fast-uri": "^3.1.2"
+	"fast-uri": "^3.1.2",
+	"postcss": "^8.5.10"
   }
 }
