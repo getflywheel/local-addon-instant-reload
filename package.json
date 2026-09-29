@@ -106,7 +106,7 @@
     "browser-sync/immutable": "3.8.4",
     "browser-sync-ui/immutable": "3.8.4",
     "**/sass/immutable": "^4.3.9",
-    "electron": "^42.2.0",
+    "electron": "^42.5.1",
     "brace-expansion": "^1.1.18",
     "ws": "^8.20.1",
 	"fast-uri": "^3.1.7",
