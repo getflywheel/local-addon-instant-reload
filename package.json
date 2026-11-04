@@ -123,6 +123,7 @@
 	"**/cosmiconfig/js-yaml": "^4.3.2",
 	"source-map-js": "^1.2.2",
 	"follow-redirects": "^1.16.2",
-	"postcss-selector-parser": "^7.1.7"
+	"postcss-selector-parser": "^7.1.7",
+	"minimatch": "^11.0.4"
   }
 }
